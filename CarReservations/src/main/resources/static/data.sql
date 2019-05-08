@@ -25,5 +25,4 @@ INSERT INTO car(car_id, brand, model, year, price, category, seats, doors, autom
 INSERT INTO customer (customer_id, first_name, last_name, email, phone, country, city, zipcode, address) VALUES
 (DEFAULT, 'Aegon II', 'Targaryen', 'jonsnuuh@iknownothi.ng', '33443344', 'Seven Kingdoms', 'Kings Landing', '00-001', 'Red Keep 1/1'),
 (DEFAULT, 'John', 'Doe', 'john@fakemail.com', '1234567890', 'Nevercountry', 'Nevercity', '99-9999', 'Nowhere 0/0'),
-(DEFAULT, 'Tommy', 'Collns', 'youhavenopants@hoax.com', '00112233', 'United States of America', 'New York', 'NY 10021', 'East 64th Street');
-
+(DEFAULT, 'Tommy', 'Collins', 'youhavenopants@hoax.com', '00112233', 'United States of America', 'New York', 'NY 10021', 'East 64th Street');
