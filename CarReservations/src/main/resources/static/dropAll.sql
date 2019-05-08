@@ -1,3 +1,3 @@
 DROP TABLE reservation;
-DROP TABLE client;
+DROP TABLE customer;
 DROP TABLE car;

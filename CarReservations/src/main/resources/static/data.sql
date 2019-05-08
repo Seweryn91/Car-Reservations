@@ -1,4 +1,4 @@
-INSERT INTO CAR(car_id, brand, model, year, price, category, seats, doors, automaticGearbox, automaticAC) VALUES
+INSERT INTO car(car_id, brand, model, year, price, category, seats, doors, automaticGearbox, automaticAC) VALUES
 (DEFAULT, 'Opel','Adam', 2019, 15.00, 'Economic', 5,5, FALSE, FALSE),
 (DEFAULT, 'Volkswagen', 'UP!', 2018, 15.00, 'Economic', 5, 5, FALSE, FALSE),
 (DEFAULT, 'Fiat', '500', 2018, 17.00, 'Economic', 4,3, FALSE, TRUE),
@@ -22,7 +22,7 @@ INSERT INTO CAR(car_id, brand, model, year, price, category, seats, doors, autom
 (DEFAULT, 'Volkswagen', 'Touareg', 2018, 25.00, 'SUV', 5, 5, TRUE, TRUE);
 
 
-INSERT INTO client (client_id, first_name, last_name, email, phone, country, city, zipcode, address) VALUES
+INSERT INTO customer (customer_id, first_name, last_name, email, phone, country, city, zipcode, address) VALUES
 (DEFAULT, 'Aegon II', 'Targaryen', 'jonsnuuh@iknownothi.ng', '33443344', 'Seven Kingdoms', 'Kings Landing', '00-001', 'Red Keep 1/1'),
 (DEFAULT, 'John', 'Doe', 'john@fakemail.com', '1234567890', 'Nevercountry', 'Nevercity', '99-9999', 'Nowhere 0/0'),
 (DEFAULT, 'Tommy', 'Collns', 'youhavenopants@hoax.com', '00112233', 'United States of America', 'New York', 'NY 10021', 'East 64th Street');
