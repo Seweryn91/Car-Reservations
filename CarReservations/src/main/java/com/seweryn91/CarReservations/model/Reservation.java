@@ -15,8 +15,8 @@ public class Reservation {
     @Column(name = "car_id")
     private long carId;
 
-    @Column(name = "client_id")
-    private long clientId;
+    @Column(name = "customer_id")
+    private long customerId;
 
     @Column(name = "reservation_start")
     private Date startDate;
@@ -40,12 +40,12 @@ public class Reservation {
         this.carId = carId;
     }
 
-    public long getClientId() {
-        return clientId;
+    public long getCustomerId() {
+        return customerId;
     }
 
-    public void setClientId(long clientId) {
-        this.clientId = clientId;
+    public void setCustomerId(long customerId) {
+        this.customerId = customerId;
     }
 
     public Date getStartDate() {
