@@ -41,7 +41,7 @@ public class CarDAO {
 
     public void deleteCar(Car car) throws SQLException {
 
-        String query = "DELETE FROM cars WHERE car_id = ?";
+        String query = "DELETE FROM car WHERE car_id = ?";
 
         try (
                 Connection connection = ConnectionDriver.getConnection();
