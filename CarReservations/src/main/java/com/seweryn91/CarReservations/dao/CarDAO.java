@@ -7,14 +7,14 @@ import java.sql.*;
 
 public class CarDAO {
 
-    private Connection connectionDriver = ConnectionDriver.getConnection();
-
     public void addCar(Car car) throws SQLException {
+
+        String query = "INSERT INTO car(brand, model, year, category, seats, automaticGearbox, automaticAC)" +
+                " VALUES (?, ?, ?, ?, ?, ?, ?)";
+
         try (
-                Connection connectionDriver = ConnectionDriver.getConnection();
-                PreparedStatement statement = connectionDriver.prepareStatement("INSERT INTO " +
-                "car(brand, model, year, category, seats, automaticGearbox, automaticAC)" +
-                " VALUES (?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS)
+                Connection connection = ConnectionDriver.getConnection();
+                PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)
                 ) {
 
             statement.setString(1, car.getBrand());
@@ -35,6 +35,23 @@ public class CarDAO {
                 } else {
                     throw new SQLException("Inserting car failed, no ID obtained!");
                 }
+            }
+        }
+    }
+
+    public void deleteCar(Car car) throws SQLException {
+
+        String query = "DELETE FROM cars WHERE car_id = ?";
+
+        try (
+                Connection connection = ConnectionDriver.getConnection();
+                PreparedStatement statement = connection.prepareStatement(query);
+        ) {
+            statement.setLong(1, car.getCarId());
+
+            int affectedRows = statement.executeUpdate();
+            if (affectedRows == 0) {
+                throw new SQLException("Deleting failed, no rows affected!");
             }
         }
     }
