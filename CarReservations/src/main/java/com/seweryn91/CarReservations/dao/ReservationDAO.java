@@ -34,4 +34,23 @@ public class ReservationDAO {
             }
         }
     }
+
+    void deleteReservation(Reservation reservation) throws SQLException {
+
+        String query = "DELETE FROM reservation WHERE reservation_id = ?";
+
+        try (
+                Connection connection = ConnectionDriver.getConnection();
+                PreparedStatement statement = connection.prepareStatement(query);
+                ) {
+            statement.setLong(1, reservation.getReservationId());
+
+            int affectedRows = statement.executeUpdate();
+            if (affectedRows == 0) {
+                throw new SQLException("Deleting reservation failed, no rows affected!");
+            }
+
+        }
+
+    }
 }
