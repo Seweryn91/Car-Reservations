@@ -5,12 +5,12 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "customer")
-public class Customer {
+public class Customer{
 
     @Id
-    @Column(name = "client_id")
+    @Column(name = "customer_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long clientId;
+    private long customerId;
 
     @Column(name = "first_name")
     private String firstName;
@@ -36,12 +36,12 @@ public class Customer {
     @Column(name = "address")
     private String address;
 
-    public long getClientId() {
-        return clientId;
+    public long getCustomerId() {
+        return customerId;
     }
 
-    public void setClientId(long clientId) {
-        this.clientId = clientId;
+    public void setCustomerId(long customerId) {
+        this.customerId = customerId;
     }
 
     public String getFirstName() {
