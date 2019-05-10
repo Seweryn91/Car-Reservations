@@ -7,7 +7,7 @@ import java.sql.*;
 
 public class ReservationDAO {
 
-    void addReservation(Reservation reservation) throws SQLException {
+    public void addReservation(Reservation reservation) throws SQLException {
 
         String query = "INSERT INTO reservation VALUES (?, ?, ?, ?)";
 
@@ -35,7 +35,7 @@ public class ReservationDAO {
         }
     }
 
-    void deleteReservation(Reservation reservation) throws SQLException {
+    public void deleteReservation(Reservation reservation) throws SQLException {
 
         String query = "DELETE FROM reservation WHERE reservation_id = ?";
 
