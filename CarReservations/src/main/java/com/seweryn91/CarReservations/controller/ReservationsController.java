@@ -25,6 +25,6 @@ public class ReservationsController {
     }
 
     public void deleteReservation(Reservation reservation) {
-
+        //TODO: implement method
     }
 }
