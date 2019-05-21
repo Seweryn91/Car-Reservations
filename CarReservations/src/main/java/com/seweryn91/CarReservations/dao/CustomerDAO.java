@@ -25,4 +25,19 @@ public class CustomerDAO {
         }
     }
 
+    public Customer getCustomer(long customerId) {
+        Transaction tx = null;
+        Customer customer = null;
+        try {
+            Session session = sessionFactory.openSession();
+            tx = session.beginTransaction();
+            customer = session.get(Customer.class,customerId);
+            tx.commit();
+        } catch (Exception e){
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+        }
+        return customer;
+    }
+
 }
