@@ -1,10 +1,13 @@
 package com.seweryn91.CarReservations.dao;
 
+import com.seweryn91.CarReservations.model.Car;
 import com.seweryn91.CarReservations.model.Customer;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 public class CustomerDAO {
@@ -37,6 +40,22 @@ public class CustomerDAO {
             e.printStackTrace();
         }
         return customer;
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<Customer> findAllCustomers() {
+        Transaction tx = null;
+        List<Customer> allCustomers = null;
+        try {
+            Session session = sessionFactory.openSession();
+            tx = session.beginTransaction();
+            allCustomers = (List<Customer>) session.createQuery( "from Customer customer").list();
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+        }
+        return allCustomers;
     }
 
     public void deleteCustomer(long customerId) {
