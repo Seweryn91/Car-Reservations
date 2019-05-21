@@ -6,6 +6,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class ReservationDAO {
 
@@ -73,5 +75,21 @@ public class ReservationDAO {
             if (tx != null) tx.rollback();
             e.printStackTrace();
         }
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<Reservation> getAllReservations(Reservation reservation) {
+        Transaction tx = null;
+        List<Reservation> allReservations = null;
+        try {
+            Session session = sessionFactory.openSession();
+            tx = session.beginTransaction();
+            allReservations = (List<Reservation>) session.createQuery("from Reservation").list();
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+        }
+        return allReservations;
     }
 }
