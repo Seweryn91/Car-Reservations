@@ -1,6 +1,7 @@
 package com.seweryn91.CarReservations.database;
 
 import org.hibernate.SessionFactory;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -16,9 +17,10 @@ import java.util.Properties;
 public class HibernateUtil {
 
         @Bean
-        public LocalSessionFactoryBean hibernateSessionFactory(DataSource dataSource) {
+        public LocalSessionFactoryBean sessionFactory() {
             LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
-            sessionFactory.setDataSource(dataSource);
+            sessionFactory.setDataSource(dataSource());
+            sessionFactory.setPackagesToScan( "com.seweryn91.CarReservations.model");
             sessionFactory.setHibernateProperties(additionalProperties());
 
             return sessionFactory;
@@ -27,7 +29,7 @@ public class HibernateUtil {
         @Bean
         HibernateTransactionManager transactionManager(SessionFactory sessionFactory) {
             HibernateTransactionManager transactionManager = new HibernateTransactionManager();
-            transactionManager.setSessionFactory(sessionFactory);
+            transactionManager.setSessionFactory(sessionFactory().getObject());
 
             return transactionManager;
         }
@@ -49,3 +51,5 @@ public class HibernateUtil {
             return properties;
         }
 }
+
+
