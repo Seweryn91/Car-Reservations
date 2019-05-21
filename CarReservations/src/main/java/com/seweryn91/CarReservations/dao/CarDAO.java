@@ -1,11 +1,11 @@
 package com.seweryn91.CarReservations.dao;
 
-import com.seweryn91.CarReservations.database.ConnectionDriver;
+import com.seweryn91.CarReservations.database.HibernateUtil;
 import com.seweryn91.CarReservations.model.Car;
 
 import java.sql.*;
 
-public class CarDAO {
+public class CarDAO implements com.seweryn91.CarReservations.dao.interfaces.CarDAO {
 
     public void addCar(Car car) throws SQLException {
 
@@ -13,7 +13,7 @@ public class CarDAO {
                 " VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (
-                Connection connection = ConnectionDriver.getConnection();
+                Connection connection = HibernateUtil.getConnection();
                 PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)
                 ) {
 
@@ -44,7 +44,7 @@ public class CarDAO {
         String query = "DELETE FROM car WHERE car_id = ?";
 
         try (
-                Connection connection = ConnectionDriver.getConnection();
+                Connection connection = HibernateUtil.getConnection();
                 PreparedStatement statement = connection.prepareStatement(query);
         ) {
             statement.setLong(1, car.getCarId());
