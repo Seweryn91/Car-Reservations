@@ -1,58 +1,110 @@
 package com.seweryn91.CarReservations.dao;
 
+import com.seweryn91.CarReservations.dao.interfaces.CarDAOInterface;
 import com.seweryn91.CarReservations.database.HibernateUtil;
 import com.seweryn91.CarReservations.model.Car;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Repository;
 
-import java.sql.*;
 
-public class CarDAO implements com.seweryn91.CarReservations.dao.interfaces.CarDAO {
+import javax.transaction.Transactional;
+import java.util.List;
 
-    public void addCar(Car car) throws SQLException {
+@Repository
+@Transactional
+public class CarDAO {
 
-        String query = "INSERT INTO car(brand, model, year, category, seats, automaticGearbox, automaticAC)" +
-                " VALUES (?, ?, ?, ?, ?, ?, ?)";
+    @Autowired
+    private SessionFactory sessionFactory;
 
-        try (
-                Connection connection = HibernateUtil.getConnection();
-                PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)
-                ) {
 
-            statement.setString(1, car.getBrand());
-            statement.setString(2, car.getModel());
-            statement.setInt(3, car.getYear());
-            statement.setString(4, car.getCategory());
-            statement.setInt(5, car.getSeats());
-            statement.setBoolean(6, car.isAutomaticGearbox());
-            statement.setBoolean(7, car.isAutomaticAC());
-
-            int affectedRows = statement.executeUpdate();
-            if (affectedRows == 0)
-                throw new SQLException("Adding car to database failed, no rows affected!");
-
-            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    car.setCarId(generatedKeys.getLong(1));
-                } else {
-                    throw new SQLException("Inserting car failed, no ID obtained!");
-                }
-            }
+    public void getCar(long carId) {
+        Transaction tx = null;
+        try (Session session = sessionFactory.openSession()) {
+            tx = session.beginTransaction();
+            Car car = session.get(Car.class,carId);
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
         }
     }
 
-    public void deleteCar(Car car) throws SQLException {
-
-        String query = "DELETE FROM car WHERE car_id = ?";
-
-        try (
-                Connection connection = HibernateUtil.getConnection();
-                PreparedStatement statement = connection.prepareStatement(query);
-        ) {
-            statement.setLong(1, car.getCarId());
-
-            int affectedRows = statement.executeUpdate();
-            if (affectedRows == 0) {
-                throw new SQLException("Deleting failed, no rows affected!");
-            }
+    public void saveCar(Car car) {
+        Transaction tx = null;
+        try (Session session = sessionFactory.openSession()) {
+            tx = session.beginTransaction();
+            session.save(car);
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
         }
     }
+
+    @SuppressWarnings("unchecked")
+    public List<Car> findAllCars() {
+        Transaction tx = null;
+        List<Car> allCars = null;
+        try {
+            Session session = sessionFactory.openSession();
+            tx = session.beginTransaction();
+            allCars = (List<Car>) session.createQuery( "from Car car").list();
+
+            tx.commit();
+            if (allCars.isEmpty()) System.out.println("empty");
+            else {
+                for (Car car : allCars) {
+                    System.out.println(car.getBrand() + car.getModel());
+                }}
+        } catch (Exception e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+        }
+        return allCars;
+    }
+
+    public void deleteCar(long carId) {
+        Transaction tx = null;
+        try (Session session = sessionFactory.openSession()) {
+            tx = session.beginTransaction();
+            Car carToDelete = session.get(Car.class, carId);
+            if (carToDelete != null) {
+            session.delete(carToDelete);}
+        } catch (Exception e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+        }
+    }
+
+    public void getCarById(long carId) {
+        Transaction tx = null;
+        try (Session session = sessionFactory.getCurrentSession()) {
+            tx = session.beginTransaction();
+            Car carToFind = session.byId(Car.class).getReference(carId);
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+        }
+    }
+
+    public void updateCar(Car car) {
+        Transaction tx = null;
+        try (Session session = sessionFactory.openSession()) {
+            tx = session.beginTransaction();
+            session.update(car);
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+        }
+    }
+
+
 }
