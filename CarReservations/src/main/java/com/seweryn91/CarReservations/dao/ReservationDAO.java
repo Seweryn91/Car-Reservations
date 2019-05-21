@@ -1,56 +1,39 @@
 package com.seweryn91.CarReservations.dao;
 
-import com.seweryn91.CarReservations.database.ConnectionDriver;
+import com.seweryn91.CarReservations.database.HibernateUtil;
 import com.seweryn91.CarReservations.model.Reservation;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
-import java.sql.*;
 
 public class ReservationDAO {
 
-    public void addReservation(Reservation reservation) throws SQLException {
+    private SessionFactory sessionFactory;
 
-        String query = "INSERT INTO reservation VALUES (?, ?, ?, ?)";
+    public Reservation getReservation(long reservationId) {
+        Session session = sessionFactory.getCurrentSession();
+        Reservation reservation = session.get(Reservation.class, reservationId);
+        return reservation;
+    }
 
-        try (
-                Connection connection = ConnectionDriver.getConnection();
-                PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)
-                ) {
-            statement.setLong(1, reservation.getCarId());
-            statement.setLong(2, reservation.getCustomerId());
-            statement.setDate(3, (Date) reservation.getStartDate());
-            statement.setDate(4, (Date) reservation.getEndDate());
 
-            int affectedRows = statement.executeUpdate();
-            if (affectedRows == 0) {
-                throw new SQLException("Adding reservation to database failed, no rows affected!");
-            }
-
-            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    reservation.setReservationId(generatedKeys.getLong(1));
-                } else {
-                    throw new SQLException("Inserting reservation to database failed, no ID obtained!");
-                }
-            }
+    public void saveReservation(Reservation reservation) {
+        Session session = sessionFactory.getCurrentSession();
+        Reservation reservationFromDB = session.get(Reservation.class, reservation.getReservationId());
+        if (reservationFromDB == null) {
+            session.save(reservation);
+        } else {
+            reservation = reservationFromDB;
         }
     }
 
-    public void deleteReservation(Reservation reservation) throws SQLException {
 
-        String query = "DELETE FROM reservation WHERE reservation_id = ?";
+    public void deleteReservation(long reservationId) {
 
-        try (
-                Connection connection = ConnectionDriver.getConnection();
-                PreparedStatement statement = connection.prepareStatement(query);
-                ) {
-            statement.setLong(1, reservation.getReservationId());
-
-            int affectedRows = statement.executeUpdate();
-            if (affectedRows == 0) {
-                throw new SQLException("Deleting reservation failed, no rows affected!");
-            }
-
+        Session session = sessionFactory.getCurrentSession();
+        Reservation reservationInDB = session.load(Reservation.class, reservationId);
+        if (reservationInDB != null) {
+            session.delete(reservationId);
         }
-
     }
 }
