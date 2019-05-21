@@ -1,14 +1,10 @@
 package com.seweryn91.CarReservations.dao;
 
-import com.seweryn91.CarReservations.dao.interfaces.CarDAOInterface;
-import com.seweryn91.CarReservations.database.HibernateUtil;
 import com.seweryn91.CarReservations.model.Car;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 
@@ -77,7 +73,7 @@ public class CarDAO {
             Session session = sessionFactory.openSession();
             tx = session.beginTransaction();
             carsOfCategory = (List<Car>) session.createQuery("from Car c where c.category= :category")
-                    .setString("category", category).list();
+                    .setParameter("category", category).list();
             tx.commit();
         } catch (Exception e) {
             if (tx != null) tx.rollback();
@@ -102,7 +98,7 @@ public class CarDAO {
     public Car getCarById(long carId) {
         Transaction tx = null;
         Car carToFind = null;
-        try (Session session = sessionFactory.getCurrentSession()) {
+        try (Session session = sessionFactory.openSession()) {
             tx = session.beginTransaction();
             carToFind = session.byId(Car.class).getReference(carId);
             tx.commit();
@@ -113,8 +109,9 @@ public class CarDAO {
         return carToFind;
     }
 
-    public void updateCar(Car car) {
+    public void updateCar(long carId) {
         Transaction tx = null;
+        Car car = getCarById(carId);
         try (Session session = sessionFactory.openSession()) {
             tx = session.beginTransaction();
             session.update(car);
