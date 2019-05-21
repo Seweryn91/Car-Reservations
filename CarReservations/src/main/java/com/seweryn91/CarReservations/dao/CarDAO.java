@@ -16,16 +16,19 @@ public class CarDAO {
     private SessionFactory sessionFactory;
 
 
-    public void getCar(long carId) {
+    public Car getCar(long carId) {
         Transaction tx = null;
+        Car car = null;
         try (Session session = sessionFactory.openSession()) {
             tx = session.beginTransaction();
-            Car car = session.get(Car.class,carId);
+            car = session.get(Car.class,carId);
             tx.commit();
+            return car;
         } catch (Exception e) {
             if (tx != null) tx.rollback();
             e.printStackTrace();
         }
+        return car;
     }
 
     public void saveCar(Car car) {
@@ -48,13 +51,7 @@ public class CarDAO {
             Session session = sessionFactory.openSession();
             tx = session.beginTransaction();
             allCars = (List<Car>) session.createQuery( "from Car car").list();
-
             tx.commit();
-            if (allCars.isEmpty()) System.out.println("empty");
-            else {
-                for (Car car : allCars) {
-                    System.out.println(car.getBrand() + car.getModel());
-                }}
         } catch (Exception e) {
             if (tx != null) tx.rollback();
             e.printStackTrace();
