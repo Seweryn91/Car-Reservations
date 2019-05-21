@@ -1,6 +1,5 @@
 package com.seweryn91.CarReservations.dao;
 
-import com.seweryn91.CarReservations.database.HibernateUtil;
 import com.seweryn91.CarReservations.model.Customer;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -33,11 +32,26 @@ public class CustomerDAO {
             tx = session.beginTransaction();
             customer = session.get(Customer.class,customerId);
             tx.commit();
-        } catch (Exception e){
+        } catch (Exception e) {
             if (tx != null) tx.rollback();
             e.printStackTrace();
         }
         return customer;
+    }
+
+    public void deleteCustomer(long customerId) {
+        Transaction tx = null;
+        try {
+            Session session = sessionFactory.openSession();
+            tx = session.beginTransaction();
+            Customer customerInDB = session.load(Customer.class, customerId);
+            if (customerInDB != null) {
+            session.delete(Customer.class);
+            }
+        } catch (Exception e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+        }
     }
 
 }
