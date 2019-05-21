@@ -69,6 +69,23 @@ public class CarDAO {
         return allCars;
     }
 
+    @SuppressWarnings("unchecked")
+    public List<Car> getCarsOfCategory(String category) {
+        Transaction tx = null;
+        List<Car> carsOfCategory = null;
+        try {
+            Session session = sessionFactory.openSession();
+            tx = session.beginTransaction();
+            carsOfCategory = (List<Car>) session.createQuery("from Car c where c.category= :category")
+                    .setString("category", category).list();
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+        }
+        return carsOfCategory;
+    }
+
     public void deleteCar(long carId) {
         Transaction tx = null;
         try (Session session = sessionFactory.openSession()) {
@@ -82,16 +99,18 @@ public class CarDAO {
         }
     }
 
-    public void getCarById(long carId) {
+    public Car getCarById(long carId) {
         Transaction tx = null;
+        Car carToFind = null;
         try (Session session = sessionFactory.getCurrentSession()) {
             tx = session.beginTransaction();
-            Car carToFind = session.byId(Car.class).getReference(carId);
+            carToFind = session.byId(Car.class).getReference(carId);
             tx.commit();
         } catch (Exception e) {
             if (tx != null) tx.rollback();
             e.printStackTrace();
         }
+        return carToFind;
     }
 
     public void updateCar(Car car) {
