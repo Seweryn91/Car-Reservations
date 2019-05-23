@@ -29,6 +29,9 @@ public class Car {
     @Column(name = "seats")
     private int seats;
 
+    @Column(name = "doors")
+    private int doors;
+
     @Column(name = "automaticGearbox")
     private boolean automaticGearbox;
 
@@ -86,6 +89,10 @@ public class Car {
     public void setSeats(int seats) {
         this.seats = seats;
     }
+
+    public int getDoors() { return doors; }
+
+    public void setDoors(int doors) { this.doors = doors; }
 
     public boolean isAutomaticGearbox() {
         return automaticGearbox;
