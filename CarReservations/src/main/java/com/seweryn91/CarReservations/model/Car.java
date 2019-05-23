@@ -20,6 +20,9 @@ public class Car {
     @Column(name = "year")
     private int year;
 
+    @Column(name = "price")
+    private double price;
+
     @Column(name = "category")
     private String category;
 
@@ -63,6 +66,10 @@ public class Car {
     public void setYear(int year) {
         this.year = year;
     }
+
+    public double getPrice() { return price; }
+
+    public void setPrice(double price) { this.price = price; }
 
     public String getCategory() {
         return category;
