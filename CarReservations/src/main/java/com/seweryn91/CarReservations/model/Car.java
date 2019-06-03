@@ -8,7 +8,7 @@ public class Car {
 
     @Id
     @Column(name = "car_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long carId;
 
     @Column(name = "brand")
