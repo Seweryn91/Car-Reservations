@@ -76,13 +76,16 @@ public class CarDAO {
         return carsOfCategory;
     }
 
+
     public void deleteCar(long carId) {
         Transaction tx = null;
         try (Session session = sessionFactory.openSession()) {
             tx = session.beginTransaction();
             Car carToDelete = session.get(Car.class, carId);
             if (carToDelete != null) {
-            session.delete(carToDelete);}
+                session.delete(carToDelete);
+                tx.commit();
+            }
         } catch (Exception e) {
             if (tx != null) tx.rollback();
             e.printStackTrace();
