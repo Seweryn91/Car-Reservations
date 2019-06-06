@@ -103,8 +103,18 @@ public class CustomerDAO {
         }
     }
 
-    public void updateCustomerEmail() {
-        //TODO: Implement method
+    public void updateCustomerEmail(long customerId, String email) {
+        Transaction tx = null;
+        try (Session session = sessionFactory.openSession()) {
+            tx = session.beginTransaction();
+            Customer customer = session.load(Customer.class, customerId);
+            customer.setEmail(email);
+            session.update(customer);
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+        }
     }
 
     public void updateCustomerPhone() {
