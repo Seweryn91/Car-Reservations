@@ -9,7 +9,7 @@ public class Customer{
 
     @Id
     @Column(name = "customer_id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long customerId;
 
     @Column(name = "first_name")
