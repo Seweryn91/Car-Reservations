@@ -58,11 +58,12 @@ public class CustomerDAO {
 
     public void deleteCustomer(long customerId) {
         Transaction tx = null;
-        try (Session session = sessionFactory.openSession()){
+        try (Session session = sessionFactory.openSession()) {
             tx = session.beginTransaction();
-            Customer customerInDB = session.load(Customer.class, customerId);
-            if (customerInDB != null) {
-                session.delete(customerInDB);
+            Customer customerToDelete = session.get(Customer.class, customerId);
+            if (customerToDelete != null) {
+                session.delete(customerToDelete);
+                tx.commit();
             }
         } catch (Exception e) {
             if (tx != null) tx.rollback();
