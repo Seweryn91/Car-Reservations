@@ -63,12 +63,21 @@ class CarDAOTest {
 
     @Test
     void testFindAllCars() {
-        List<Car> carsRetrieved;
+        List<Car> carsRetrieved = carDAO.findAllCars();
 
     }
 
     @Test
     void testGetCarsOfCategory() {
+        List<Car> economicCars = carDAO.getCarsOfCategory("Economic");
+        int expectedLength = 7;
+        int actualLength = economicCars.size();
+        Assertions.assertEquals(expectedLength, actualLength);
+
+        List<Car> compactCars = carDAO.getCarsOfCategory("Compact");
+        expectedLength = 4;
+        actualLength = compactCars.size();
+        Assertions.assertEquals(expectedLength, actualLength);
     }
 
     @Test
@@ -89,6 +98,7 @@ class CarDAOTest {
 
     @Test
     void testUpdateCarPrice() {
+        carDAO.saveCar(createCar());
         long carToUpdateId = carDAO.getCarsOfCategory("Crap").get(0).getCarId();
         double newPrice = 7.5;
         carDAO.updateCarPrice(carToUpdateId, newPrice);
@@ -96,6 +106,7 @@ class CarDAOTest {
         Assertions.assertNotNull(carAfterUpdate);
         double price = carAfterUpdate.getPrice();
         Assertions.assertEquals(7.5, price);
+        carDAO.deleteCar(carAfterUpdate.getCarId());
 
     }
 
