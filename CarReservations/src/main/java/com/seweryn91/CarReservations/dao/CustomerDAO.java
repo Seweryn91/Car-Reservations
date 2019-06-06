@@ -173,8 +173,18 @@ public class CustomerDAO {
         }
     }
 
-    public void updateCustomerAddress() {
-        //TODO: Implement method
+    public void updateCustomerAddress(long customerId, String address) {
+        Transaction tx = null;
+        try (Session session = sessionFactory.openSession()) {
+            tx = session.beginTransaction();
+            Customer customer = session.load(Customer.class, customerId);
+            customer.setAddress(address);
+            session.update(customer);
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+        }
     }
 
 }
