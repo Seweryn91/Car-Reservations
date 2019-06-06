@@ -36,14 +36,20 @@ class CustomerDAOTest {
         Assertions.assertEquals("Aegon II", customer.getFirstName());
         Assertions.assertEquals("Targaryen", customer.getLastName());
         Assertions.assertEquals("Seven Kingdoms", customer.getCountry());
+
     }
 
     @Test
     void testFindAllCustomers() {
+        List<Customer> customers = customerDAO.findAllCustomers();
+        Customer firstCustomer = customerDAO.getCustomer(1);
+        Assertions.assertEquals("Kings Landing", firstCustomer.getCity());
+        Assertions.assertEquals(customers.size(), 3);
     }
 
     @Test
     void testDeleteCustomer() {
+
     }
 
     @Test
