@@ -16,21 +16,6 @@ public class CarDAO {
     private SessionFactory sessionFactory;
 
 
-    public Car getCar(long carId) {
-        Transaction tx = null;
-        Car car = null;
-        try (Session session = sessionFactory.openSession()) {
-            tx = session.beginTransaction();
-            car = session.get(Car.class,carId);
-            tx.commit();
-            return car;
-        } catch (Exception e) {
-            if (tx != null) tx.rollback();
-            e.printStackTrace();
-        }
-        return car;
-    }
-
     public void saveCar(Car car) {
         Transaction tx = null;
         try (Session session = sessionFactory.openSession()) {
