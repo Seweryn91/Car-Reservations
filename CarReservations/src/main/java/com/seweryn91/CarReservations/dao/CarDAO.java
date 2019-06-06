@@ -97,7 +97,7 @@ public class CarDAO {
         Car carToFind = null;
         try (Session session = sessionFactory.openSession()) {
             tx = session.beginTransaction();
-            carToFind = session.byId(Car.class).getReference(carId);
+            carToFind = session.byId(Car.class).load(carId);
             tx.commit();
         } catch (Exception e) {
             if (tx != null) tx.rollback();
@@ -106,11 +106,12 @@ public class CarDAO {
         return carToFind;
     }
 
-    public void updateCar(long carId) {
+    public void updateCarPrice(long carId, double newPrice) {
         Transaction tx = null;
-        Car car = getCarById(carId);
         try (Session session = sessionFactory.openSession()) {
             tx = session.beginTransaction();
+            Car car = getCarById(carId);
+            car.setPrice(newPrice);
             session.update(car);
             tx.commit();
         } catch (Exception e) {
@@ -119,5 +120,116 @@ public class CarDAO {
         }
     }
 
+    public void updateCarBrand(long carId, String brand) {
+        Transaction tx = null;
+        try (Session session = sessionFactory.openSession()) {
+            tx = session.beginTransaction();
+            Car car = getCarById(carId);
+            car.setBrand(brand);
+            session.update(car);
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+        }
+    }
+
+    public void updateCarModel(long carId, String model) {
+        Transaction tx = null;
+        try (Session session = sessionFactory.openSession()) {
+            tx = session.beginTransaction();
+            Car car = getCarById(carId);
+            car.setModel(model);
+            session.update(car);
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+        }
+    }
+
+    public void updateCarSeats(long carId, int seats) {
+        Transaction tx = null;
+        try (Session session = sessionFactory.openSession()) {
+            tx = session.beginTransaction();
+            Car car = getCarById(carId);
+            car.setSeats(seats);
+            session.update(car);
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+        }
+    }
+
+    public void updateCarYear(long carId, int year) {
+        Transaction tx = null;
+        try (Session session = sessionFactory.openSession()) {
+            tx = session.beginTransaction();
+            Car car = getCarById(carId);
+            car.setYear(year);
+            session.update(car);
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+        }
+    }
+
+    public void updateCarCategory(long carId, String category) {
+        Transaction tx = null;
+        try (Session session = sessionFactory.openSession()) {
+            tx = session.beginTransaction();
+            Car car = getCarById(carId);
+            car.setCategory(category);
+            session.update(car);
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+        }
+    }
+
+    public void updateCarDoors(long carId, int doors) {
+        Transaction tx = null;
+        try (Session session = sessionFactory.openSession()) {
+            tx = session.beginTransaction();
+            Car car = getCarById(carId);
+            car.setDoors(doors);
+            session.update(car);
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+        }
+    }
+
+    public void updateCarGearbox(long carId, boolean isAutomatic) {
+        Transaction tx = null;
+        try (Session session = sessionFactory.openSession()) {
+            tx = session.beginTransaction();
+            Car car = getCarById(carId);
+            car.setAutomaticGearbox(isAutomatic);
+            session.update(car);
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+        }
+    }
+
+    public void updateCarAutomaticAC(long carId, boolean isAutomaticAC) {
+        Transaction tx = null;
+        try (Session session = sessionFactory.openSession()) {
+            tx = session.beginTransaction();
+            Car car = getCarById(carId);
+            car.setAutomaticAC(isAutomaticAC);
+            session.update(car);
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+        }
+    }
 
 }
