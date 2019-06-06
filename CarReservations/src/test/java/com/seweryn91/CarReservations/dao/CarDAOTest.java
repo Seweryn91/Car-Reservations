@@ -3,9 +3,7 @@ package com.seweryn91.CarReservations.dao;
 import com.seweryn91.CarReservations.model.Car;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -19,6 +17,7 @@ class CarDAOTest {
     @Autowired
             CarDAO carDAO;
     SessionFactory sessionFactory;
+
 
     void setup() {
         Configuration configuration = new Configuration();
@@ -36,22 +35,23 @@ class CarDAOTest {
     @DisplayName("Test get car from DB")
     @Test
     void testGetCar() {
-        Car car = carDAO.getCar(1);
+        Car car = carDAO.getCarById(1);
         Assertions.assertNotNull(car);
         Assertions.assertEquals("Opel", car.getBrand());
         Assertions.assertEquals("Adam", car.getModel());
+        carDAO.deleteCar(26);
     }
 
     @DisplayName("Test save car in DB")
     @Test
     void testSaveCar() {
-        setup();
+        //setup();
         Car car = createCar();
         int originalNumberOfCars = carDAO.findAllCars().size();
         carDAO.saveCar(car);
         int newNumberOfCars = carDAO.findAllCars().size();
-        Assertions.assertEquals(originalNumberOfCars + 1, newNumberOfCars + 1);
-        List<Car> testCarList = carDAO.getCarsOfCategory("Crap");
+        Assertions.assertEquals(originalNumberOfCars + 1, newNumberOfCars);
+        List<Car> testCarList = carDAO.getCarsOfCategory("Test");
         Car carFromList = testCarList.get(0);
         Assertions.assertEquals(car.getBrand(), carFromList.getBrand());
         Assertions.assertEquals(car.getModel(), carFromList.getModel());
@@ -59,12 +59,15 @@ class CarDAOTest {
         Assertions.assertEquals(car.getPrice(), carFromList.getPrice());
         Assertions.assertEquals(car.getDoors(), carFromList.getDoors());
         Assertions.assertEquals(car.getYear(), carFromList.getYear());
+        carDAO.deleteCar(carFromList.getCarId());
     }
 
     @Test
     void testFindAllCars() {
         List<Car> carsRetrieved = carDAO.findAllCars();
-
+        int expectedLength = 22;
+        int actualSize = carsRetrieved.size();
+        Assertions.assertEquals(expectedLength, actualSize);
     }
 
     @Test
@@ -82,24 +85,19 @@ class CarDAOTest {
 
     @Test
     void testDeleteCar() {
-        List<Car> carsList;
-        Car carToDelete = carDAO.getCarsOfCategory("Crap").get(0);
-        carsList = carDAO.findAllCars();
+        carDAO.saveCar(createCar());
+        List<Car> carsList = carDAO.findAllCars();
+        Car carToDelete = carDAO.getCarsOfCategory("Test").get(0);
         int carsListLength = carsList.size();
-        long carToDeleteId = carToDelete.getCarId();
-        carDAO.deleteCar(carToDeleteId);
+        carDAO.deleteCar(carToDelete.getCarId());
         int newCarsListLength = carDAO.findAllCars().size();
         Assertions.assertEquals(carsListLength-1, newCarsListLength);
     }
 
     @Test
-    void testGetCarById() {
-    }
-
-    @Test
     void testUpdateCarPrice() {
         carDAO.saveCar(createCar());
-        long carToUpdateId = carDAO.getCarsOfCategory("Crap").get(0).getCarId();
+        long carToUpdateId = carDAO.getCarsOfCategory("Test").get(0).getCarId();
         double newPrice = 7.5;
         carDAO.updateCarPrice(carToUpdateId, newPrice);
         Car carAfterUpdate = carDAO.getCarById(carToUpdateId);
@@ -110,13 +108,24 @@ class CarDAOTest {
 
     }
 
+    @Test
+    void testUpdateCarBrand() {
+        carDAO.saveCar(createCar());
+        long cartoUpdateId = carDAO.getCarsOfCategory("Test").get(0).getCarId();
+        String brand = "TestBrand";
+        carDAO.updateCarBrand(cartoUpdateId, brand);
+        Car carAfterUpdate = carDAO.getCarById(cartoUpdateId);
+        Assertions.assertEquals(carAfterUpdate.getBrand(), brand);
+        carDAO.deleteCar(carAfterUpdate.getCarId());
+    }
+
     Car createCar() {
         Car car = new Car();
         car.setBrand("Lada");
         car.setModel("2105");
         car.setYear(1980);
         car.setPrice(8.5);
-        car.setCategory("Crap");
+        car.setCategory("Test");
         car.setSeats(5);
         car.setDoors(4);
         car.setAutomaticAC(false);
