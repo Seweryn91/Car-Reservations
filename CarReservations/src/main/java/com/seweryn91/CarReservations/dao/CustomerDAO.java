@@ -74,8 +74,19 @@ public class CustomerDAO {
         }
     }
 
-    public void updateCustomerFirstName() {
-        //TODO: Implement method
+    public void updateCustomerFirstName(long customerId, String fname) {
+        Transaction tx = null;
+        try (Session session = sessionFactory.openSession()) {
+            tx = session.beginTransaction();
+            Customer customer = session.load(Customer.class, customerId);
+            customer.setFirstName(fname);
+            session.update(customer);
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+        }
+
     }
 
     public void updateCustomerLastName() {
