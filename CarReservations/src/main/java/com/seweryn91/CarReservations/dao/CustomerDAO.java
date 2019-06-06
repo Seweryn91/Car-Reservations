@@ -145,8 +145,18 @@ public class CustomerDAO {
         }
     }
 
-    public void updateCustomerCity() {
-        //TODO: Implement method
+    public void updateCustomerCity(long customerId, String city) {
+        Transaction tx = null;
+        try (Session session = sessionFactory.openSession()) {
+            tx = session.beginTransaction();
+            Customer customer = session.load(Customer.class, customerId);
+            customer.setCity(city);
+            session.update(customer);
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+        }
     }
 
     public void updateCustomerZipcode() {
