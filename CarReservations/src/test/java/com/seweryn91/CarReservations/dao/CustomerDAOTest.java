@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @SpringBootTest
 @Transactional
@@ -19,6 +20,14 @@ class CustomerDAOTest {
 
     @Test
     void testSaveCustomer() {
+        List<Customer> allCustomers = customerDAO.findAllCustomers();
+        int previousLength = allCustomers.size();
+        Customer customer = createCustomer();
+        customerDAO.saveCustomer(customer);
+        List<Customer> afterInsert = customerDAO.findAllCustomers();
+        int currentSize = afterInsert.size();
+        Assertions.assertEquals(previousLength + 1, currentSize);
+        customerDAO.deleteCustomer(customer.getCustomerId());
     }
 
     @Test
