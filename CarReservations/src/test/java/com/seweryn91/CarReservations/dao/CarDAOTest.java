@@ -150,6 +150,17 @@ class CarDAOTest {
         carDAO.deleteCar(carAfterUpdate.getCarId());
     }
 
+    @Test
+    void testUpdateCarGearbox() {
+        carDAO.saveCar(createCar());
+        long cartoUpdateId = carDAO.getCarsOfCategory("Test").get(0).getCarId();
+        boolean isAutomatic = true;
+        carDAO.updateCarGearbox(cartoUpdateId, isAutomatic);
+        Car carAfterUpdate = carDAO.getCarById(cartoUpdateId);
+        Assertions.assertEquals(true, carAfterUpdate.isAutomaticGearbox());
+        carDAO.deleteCar(carAfterUpdate.getCarId());
+    }
+
     Car createCar() {
         Car car = new Car();
         car.setBrand("Lada");
