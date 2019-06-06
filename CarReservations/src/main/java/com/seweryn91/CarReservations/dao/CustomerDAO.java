@@ -1,10 +1,10 @@
 package com.seweryn91.CarReservations.dao;
 
-import com.seweryn91.CarReservations.model.Car;
 import com.seweryn91.CarReservations.model.Customer;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -12,6 +12,7 @@ import java.util.List;
 @Component
 public class CustomerDAO {
 
+    @Autowired
     private SessionFactory sessionFactory;
 
     public void saveCustomer(Customer customer) {
@@ -71,6 +72,38 @@ public class CustomerDAO {
             if (tx != null) tx.rollback();
             e.printStackTrace();
         }
+    }
+
+    public void updateCustomerFirstName() {
+        //TODO: Implement method
+    }
+
+    public void updateCustomerLastName() {
+        //TODO: Implement method
+    }
+
+    public void updateCustomerEmail() {
+        //TODO: Implement method
+    }
+
+    public void updateCustomerPhone() {
+        //TODO: Implement method
+    }
+
+    public void updateCustomerCountry() {
+        //TODO: Implement method
+    }
+
+    public void updateCustomerCity() {
+        //TODO: Implement method
+    }
+
+    public void updateCustomerZipcode() {
+        //TODO: Implement method
+    }
+
+    public void updateCustomerAddress() {
+        //TODO: Implement method
     }
 
 }
