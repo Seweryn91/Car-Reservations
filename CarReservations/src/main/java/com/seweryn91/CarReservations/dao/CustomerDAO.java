@@ -117,8 +117,18 @@ public class CustomerDAO {
         }
     }
 
-    public void updateCustomerPhone() {
-        //TODO: Implement method
+    public void updateCustomerPhone(long customerId, String phone) {
+        Transaction tx = null;
+        try (Session session = sessionFactory.openSession()) {
+            tx = session.beginTransaction();
+            Customer customer = session.load(Customer.class, customerId);
+            customer.setPhone(phone);
+            session.update(customer);
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+        }
     }
 
     public void updateCustomerCountry() {
