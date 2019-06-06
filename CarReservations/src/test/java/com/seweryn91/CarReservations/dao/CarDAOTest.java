@@ -117,6 +117,17 @@ class CarDAOTest {
         carDAO.deleteCar(carAfterUpdate.getCarId());
     }
 
+    @Test
+    void testUpdateCarCategory() {
+        carDAO.saveCar(createCar());
+        long cartoUpdateId = carDAO.getCarsOfCategory("Test").get(0).getCarId();
+        String category = "Heckin awesome"
+        carDAO.updateCarCategory(cartoUpdateId, category);
+        Car carAfterUpdate = carDAO.getCarById(cartoUpdateId);
+        Assertions.assertEquals(carAfterUpdate.getCategory(), category);
+        carDAO.deleteCar(carAfterUpdate.getCarId());
+    }
+
     Car createCar() {
         Car car = new Car();
         car.setBrand("Lada");
