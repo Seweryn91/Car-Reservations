@@ -49,7 +49,14 @@ class CustomerDAOTest {
 
     @Test
     void testDeleteCustomer() {
-
+        Customer customer = createCustomer();
+        customerDAO.saveCustomer(customer);
+        List<Customer> customers = customerDAO.findAllCustomers();
+        int prevNOCustomers = customers.size();
+        customerDAO.deleteCustomer(customer.getCustomerId());
+        List<Customer> customersAfterDelete = customerDAO.findAllCustomers();
+        int nextNOCustomers = customersAfterDelete.size();
+        Assertions.assertEquals(nextNOCustomers, prevNOCustomers);
     }
 
     @Test
