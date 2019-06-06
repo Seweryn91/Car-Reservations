@@ -2,8 +2,9 @@ package com.seweryn91.CarReservations.dao;
 
 import com.seweryn91.CarReservations.model.Car;
 import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -19,19 +20,6 @@ class CarDAOTest {
     SessionFactory sessionFactory;
 
 
-    void setup() {
-        Configuration configuration = new Configuration();
-        configuration.addAnnotatedClass(Car.class)
-            .setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect")
-            .setProperty("hibernate.connection.driver_class", "org.postgresql.Driver")
-            .setProperty("username", "postgres").setProperty("password", "postgres")
-            .setProperty("hibernate.connection.url", "jdbc:postgresql://localhost:5432/carreservations?currentSchema=public&user=postgres&password=postgres")
-            .setProperty("hibernate.hbm2ddl.auto", "none");
-
-        sessionFactory = configuration.buildSessionFactory();
-        sessionFactory.openSession();
-        }
-
     @DisplayName("Test get car from DB")
     @Test
     void testGetCar() {
@@ -45,7 +33,6 @@ class CarDAOTest {
     @DisplayName("Test save car in DB")
     @Test
     void testSaveCar() {
-        //setup();
         Car car = createCar();
         int originalNumberOfCars = carDAO.findAllCars().size();
         carDAO.saveCar(car);
@@ -65,7 +52,7 @@ class CarDAOTest {
     @Test
     void testFindAllCars() {
         List<Car> carsRetrieved = carDAO.findAllCars();
-        int expectedLength = 22;
+        int expectedLength = 21;
         int actualSize = carsRetrieved.size();
         Assertions.assertEquals(expectedLength, actualSize);
     }
