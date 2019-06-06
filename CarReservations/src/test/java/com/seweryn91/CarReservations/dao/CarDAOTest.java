@@ -121,10 +121,21 @@ class CarDAOTest {
     void testUpdateCarCategory() {
         carDAO.saveCar(createCar());
         long cartoUpdateId = carDAO.getCarsOfCategory("Test").get(0).getCarId();
-        String category = "Heckin awesome"
+        String category = "Heckin awesome";
         carDAO.updateCarCategory(cartoUpdateId, category);
         Car carAfterUpdate = carDAO.getCarById(cartoUpdateId);
         Assertions.assertEquals(carAfterUpdate.getCategory(), category);
+        carDAO.deleteCar(carAfterUpdate.getCarId());
+    }
+
+    @Test
+    void testUpdateCarSeats() {
+        carDAO.saveCar(createCar());
+        long cartoUpdateId = carDAO.getCarsOfCategory("Test").get(0).getCarId();
+        int seats = 999;
+        carDAO.updateCarSeats(cartoUpdateId, seats);
+        Car carAfterUpdate = carDAO.getCarById(cartoUpdateId);
+        Assertions.assertEquals(carAfterUpdate.getSeats(), seats);
         carDAO.deleteCar(carAfterUpdate.getCarId());
     }
 
