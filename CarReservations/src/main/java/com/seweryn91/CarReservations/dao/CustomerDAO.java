@@ -17,8 +17,7 @@ public class CustomerDAO {
 
     public void saveCustomer(Customer customer) {
         Transaction tx = null;
-        try {
-            Session session = sessionFactory.openSession();
+        try (Session session = sessionFactory.openSession()) {
             tx = session.beginTransaction();
             session.save(customer);
             tx.commit();
@@ -31,10 +30,9 @@ public class CustomerDAO {
     public Customer getCustomer(long customerId) {
         Transaction tx = null;
         Customer customer = null;
-        try {
-            Session session = sessionFactory.openSession();
+        try (Session session = sessionFactory.openSession()){
             tx = session.beginTransaction();
-            customer = session.get(Customer.class,customerId);
+            customer = session.byId(Customer.class).load(customerId);
             tx.commit();
         } catch (Exception e) {
             if (tx != null) tx.rollback();
@@ -47,8 +45,7 @@ public class CustomerDAO {
     public List<Customer> findAllCustomers() {
         Transaction tx = null;
         List<Customer> allCustomers = null;
-        try {
-            Session session = sessionFactory.openSession();
+        try (Session session = sessionFactory.openSession()) {
             tx = session.beginTransaction();
             allCustomers = (List<Customer>) session.createQuery( "from Customer customer").list();
             tx.commit();
