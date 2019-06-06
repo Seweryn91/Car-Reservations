@@ -20,7 +20,6 @@ class CarDAOTest {
             CarDAO carDAO;
     SessionFactory sessionFactory;
 
-    //@BeforeAll
     void setup() {
         Configuration configuration = new Configuration();
         configuration.addAnnotatedClass(Car.class)
@@ -37,7 +36,10 @@ class CarDAOTest {
     @DisplayName("Test get car from DB")
     @Test
     void testGetCar() {
-        Assertions.assertNotNull(carDAO.getCar(1));
+        Car car = carDAO.getCar(1);
+        Assertions.assertNotNull(car);
+        Assertions.assertEquals("Opel", car.getBrand());
+        Assertions.assertEquals("Adam", car.getModel());
     }
 
     @DisplayName("Test save car in DB")
@@ -45,7 +47,10 @@ class CarDAOTest {
     void testSaveCar() {
         setup();
         Car car = createCar();
+        int originalNumberOfCars = carDAO.findAllCars().size();
         carDAO.saveCar(car);
+        int newNumberOfCars = carDAO.findAllCars().size();
+        Assertions.assertEquals(originalNumberOfCars + 1, newNumberOfCars + 1);
         List<Car> testCarList = carDAO.getCarsOfCategory("Crap");
         Car carFromList = testCarList.get(0);
         Assertions.assertEquals(car.getBrand(), carFromList.getBrand());
@@ -58,6 +63,7 @@ class CarDAOTest {
 
     @Test
     void testFindAllCars() {
+        List<Car> carsRetrieved;
 
     }
 
@@ -67,6 +73,14 @@ class CarDAOTest {
 
     @Test
     void testDeleteCar() {
+        List<Car> carsList;
+        Car carToDelete = carDAO.getCarsOfCategory("Crap").get(0);
+        carsList = carDAO.findAllCars();
+        int carsListLength = carsList.size();
+        long carToDeleteId = carToDelete.getCarId();
+        carDAO.deleteCar(carToDeleteId);
+        int newCarsListLength = carDAO.findAllCars().size();
+        Assertions.assertEquals(carsListLength-1, newCarsListLength);
     }
 
     @Test
@@ -74,7 +88,15 @@ class CarDAOTest {
     }
 
     @Test
-    void testUpdateCar() {
+    void testUpdateCarPrice() {
+        long carToUpdateId = carDAO.getCarsOfCategory("Crap").get(0).getCarId();
+        double newPrice = 7.5;
+        carDAO.updateCarPrice(carToUpdateId, newPrice);
+        Car carAfterUpdate = carDAO.getCarById(carToUpdateId);
+        Assertions.assertNotNull(carAfterUpdate);
+        double price = carAfterUpdate.getPrice();
+        Assertions.assertEquals(7.5, price);
+
     }
 
     Car createCar() {
