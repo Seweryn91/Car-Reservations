@@ -87,6 +87,14 @@ class CustomerDAOTest {
 
     @Test
     void testUpdateCustomerEmail() {
+        Customer customer = createCustomer();
+        customerDAO.saveCustomer(customer);
+        long customerId = customer.getCustomerId();
+        String email = "testm4il@jun.it";
+        customerDAO.updateCustomerEmail(customerId, email);
+        Customer customerAfterUpdate = customerDAO.getCustomer(customerId);
+        Assertions.assertEquals(email, customerAfterUpdate.getEmail());
+        customerDAO.deleteCustomer(customerId);
     }
 
     @Test
