@@ -39,7 +39,6 @@ public class ReservationDAO {
         }
     }
 
-
     public void deleteReservation(long reservationId) {
         Transaction tx = null;
         try (Session session = sessionFactory.openSession()) {
