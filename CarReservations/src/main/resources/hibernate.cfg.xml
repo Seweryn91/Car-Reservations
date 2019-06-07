@@ -13,7 +13,6 @@
         <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/carreservations</property>
         <property name="hibernate.connection.username">postgres</property>
         <property name="hibernate.connection.password">postgres</property>
-        <!--<property name="hibernate.archive.autodetection">class, hbm</property>-->
         <!-- Specifying Session Context -->
         <property name="hibernate.current_session_context_class">org.hibernate.context.internal.ThreadLocalSessionContext</property>
 
