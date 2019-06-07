@@ -25,4 +25,11 @@ INSERT INTO car(car_id, brand, model, year, price, category, seats, doors, autom
 INSERT INTO customer (customer_id, first_name, last_name, email, phone, country, city, zipcode, address) VALUES
 (DEFAULT, 'Aegon II', 'Targaryen', 'jonsnuuh@iknownothi.ng', '33443344', 'Seven Kingdoms', 'Kings Landing', '00-001', 'Red Keep 1/1'),
 (DEFAULT, 'John', 'Doe', 'john@fakemail.com', '1234567890', 'Nevercountry', 'Nevercity', '99-9999', 'Nowhere 0/0'),
-(DEFAULT, 'Tommy', 'Collins', 'youhavenopants@hoax.com', '00112233', 'United States of America', 'New York', 'NY 10021', 'East 64th Street');
+(DEFAULT, 'Tommy', 'Collins', 'youhavenopants@hoax.com', '00112233', 'United States of America', 'New York', 'NY 10021', 'East 64th Street'),
+(DEFAULT, 'Tommy', 'Vercetti', 'gogetsomesleep@vice.com', '01399323', 'United States of America', 'Vice City', 'GVC0323', '32 Kaufman Street'),
+(DEFAULT, 'Vespa', 'Vespula', 'yellowjacket@buzz.com', '9999999', 'Nestovia', 'Nestville', 'NV3118', ' 14 Bees Blvd.');
+
+INSERT INTO reservation (car_id, customer_id, reservation_start, reservation_end) VALUES
+(9, 2, to_date('2019-05-20', 'YYYY-MM-DD'), to_date('2019-05-27', 'YYYY-MM-DD')),
+(1, 3, to_date('2019-05-09', 'YYYY-MM-DD'), to_date('2019-06-23', 'YYYY-MM-DD')),
+(7, 1, to_date('2019-06-01', 'YYYY-MM-DD'), to_date('2019-06-30', 'YYYY-MM-DD'));
