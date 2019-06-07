@@ -3,6 +3,7 @@ package com.seweryn91.CarReservations.dao;
 import com.seweryn91.CarReservations.model.Customer;
 import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,6 +20,7 @@ class CustomerDAOTest {
     SessionFactory sessionFactory;
 
     @Test
+    @DisplayName("Test save customer in DB")
     void testSaveCustomer() {
         List<Customer> allCustomers = customerDAO.findAllCustomers();
         int previousLength = allCustomers.size();
@@ -31,15 +33,16 @@ class CustomerDAOTest {
     }
 
     @Test
+    @DisplayName("Test get customer form DB")
     void testGetCustomer() {
         Customer customer = customerDAO.getCustomer(1);
         Assertions.assertEquals("Aegon II", customer.getFirstName());
         Assertions.assertEquals("Targaryen", customer.getLastName());
         Assertions.assertEquals("Seven Kingdoms", customer.getCountry());
-
     }
 
     @Test
+    @DisplayName("Test get all customers")
     void testFindAllCustomers() {
         List<Customer> customers = customerDAO.findAllCustomers();
         Customer firstCustomer = customers.get(0);
@@ -49,6 +52,7 @@ class CustomerDAOTest {
     }
 
     @Test
+    @DisplayName("Test delete customer")
     void testDeleteCustomer() {
         Customer customer = createCustomer();
         customerDAO.saveCustomer(customer);
@@ -61,6 +65,7 @@ class CustomerDAOTest {
     }
 
     @Test
+    @DisplayName("Test update firstname")
     void testUpdateCustomerFirstName() {
         Customer customer = createCustomer();
         customerDAO.saveCustomer(customer);
@@ -74,6 +79,7 @@ class CustomerDAOTest {
 
 
     @Test
+    @DisplayName("Test update surname")
     void testUpdateCustomerLastName() {
         Customer customer = createCustomer();
         customerDAO.saveCustomer(customer);
@@ -86,6 +92,7 @@ class CustomerDAOTest {
     }
 
     @Test
+    @DisplayName("Test update email")
     void testUpdateCustomerEmail() {
         Customer customer = createCustomer();
         customerDAO.saveCustomer(customer);
@@ -98,6 +105,7 @@ class CustomerDAOTest {
     }
 
     @Test
+    @DisplayName("Test update phone")
     void testUpdateCustomerPhone() {
         Customer customer = createCustomer();
         customerDAO.saveCustomer(customer);
@@ -110,6 +118,7 @@ class CustomerDAOTest {
     }
 
     @Test
+    @DisplayName("Test update country")
     void testUpdateCustomerCountry() {
         Customer customer = createCustomer();
         customerDAO.saveCustomer(customer);
@@ -122,6 +131,7 @@ class CustomerDAOTest {
     }
 
     @Test
+    @DisplayName("Test update city")
     void testUpdateCustomerCity() {
         Customer customer = createCustomer();
         customerDAO.saveCustomer(customer);
@@ -134,6 +144,7 @@ class CustomerDAOTest {
     }
 
     @Test
+    @DisplayName("Test update zipcode")
     void testUpdateCustomerZipcode() {
         Customer customer = createCustomer();
         customerDAO.saveCustomer(customer);
@@ -146,6 +157,7 @@ class CustomerDAOTest {
     }
 
     @Test
+    @DisplayName("Test update address")
     void testUpdateCustomerAddress() {
         Customer customer = createCustomer();
         customerDAO.saveCustomer(customer);
