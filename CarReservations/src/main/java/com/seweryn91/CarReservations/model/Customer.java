@@ -3,7 +3,7 @@ package com.seweryn91.CarReservations.model;
 
 import javax.persistence.*;
 
-@Entity
+@Entity(name = "Customer")
 @Table(name = "customer")
 public class Customer{
 
