@@ -4,6 +4,7 @@ import com.seweryn91.CarReservations.model.Reservation;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -12,6 +13,7 @@ import java.util.List;
 @Component
 public class ReservationDAO {
 
+    @Autowired
     private SessionFactory sessionFactory;
 
     public Reservation getReservation(long reservationId) {
