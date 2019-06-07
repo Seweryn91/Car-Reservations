@@ -99,6 +99,14 @@ class CustomerDAOTest {
 
     @Test
     void testUpdateCustomerPhone() {
+        Customer customer = createCustomer();
+        customerDAO.saveCustomer(customer);
+        long customerId = customer.getCustomerId();
+        String phone = "221122331100";
+        customerDAO.updateCustomerPhone(customerId, phone);
+        Customer customerAfterUpdate = customerDAO.getCustomer(customerId);
+        Assertions.assertEquals(phone, customerAfterUpdate.getPhone());
+        customerDAO.deleteCustomer(customerId);
     }
 
     @Test
