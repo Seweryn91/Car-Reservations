@@ -135,6 +135,14 @@ class CustomerDAOTest {
 
     @Test
     void testUpdateCustomerZipcode() {
+        Customer customer = createCustomer();
+        customerDAO.saveCustomer(customer);
+        long customerId = customer.getCustomerId();
+        String zipcode = "P05TC0D3";
+        customerDAO.updateCustomerZipcode(customerId, zipcode);
+        Customer customerAfterUpdate = customerDAO.getCustomer(customerId);
+        Assertions.assertEquals(zipcode, customerAfterUpdate.getZipcode());
+        customerDAO.deleteCustomer(customerId);
     }
 
     @Test
