@@ -75,6 +75,14 @@ class CustomerDAOTest {
 
     @Test
     void testUpdateCustomerLastName() {
+        Customer customer = createCustomer();
+        customerDAO.saveCustomer(customer);
+        long customerId = customer.getCustomerId();
+        String surname = "Assert";
+        customerDAO.updateCustomerLastName(customerId, surname);
+        Customer customerAfterUpdate = customerDAO.getCustomer(customerId);
+        Assertions.assertEquals(surname, customerAfterUpdate.getLastName());
+        customerDAO.deleteCustomer(customerId);
     }
 
     @Test
