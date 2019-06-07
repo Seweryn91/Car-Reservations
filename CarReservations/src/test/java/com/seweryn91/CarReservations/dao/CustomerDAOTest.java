@@ -111,6 +111,14 @@ class CustomerDAOTest {
 
     @Test
     void testUpdateCustomerCountry() {
+        Customer customer = createCustomer();
+        customerDAO.saveCustomer(customer);
+        long customerId = customer.getCustomerId();
+        String country = "Krakhozia";
+        customerDAO.updateCustomerCountry(customerId, country);
+        Customer customerAfterUpdate = customerDAO.getCustomer(customerId);
+        Assertions.assertEquals(country, customerAfterUpdate.getCountry());
+        customerDAO.deleteCustomer(customerId);
     }
 
     @Test
