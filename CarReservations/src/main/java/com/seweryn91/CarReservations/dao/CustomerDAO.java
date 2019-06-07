@@ -7,9 +7,11 @@ import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Component
+@Transactional
 public class CustomerDAO {
 
     @Autowired
@@ -73,9 +75,10 @@ public class CustomerDAO {
 
     public void updateCustomerFirstName(long customerId, String fname) {
         Transaction tx = null;
+        Customer customer;
         try (Session session = sessionFactory.openSession()) {
             tx = session.beginTransaction();
-            Customer customer = session.load(Customer.class, customerId);
+            customer = getCustomer(customerId);
             customer.setFirstName(fname);
             session.update(customer);
             tx.commit();
@@ -83,14 +86,13 @@ public class CustomerDAO {
             if (tx != null) tx.rollback();
             e.printStackTrace();
         }
-
     }
 
     public void updateCustomerLastName(long customerId, String lname) {
         Transaction tx = null;
         try (Session session = sessionFactory.openSession()) {
             tx = session.beginTransaction();
-            Customer customer = session.load(Customer.class, customerId);
+            Customer customer = getCustomer(customerId);
             customer.setLastName(lname);
             session.update(customer);
             tx.commit();
@@ -104,7 +106,7 @@ public class CustomerDAO {
         Transaction tx = null;
         try (Session session = sessionFactory.openSession()) {
             tx = session.beginTransaction();
-            Customer customer = session.load(Customer.class, customerId);
+            Customer customer = getCustomer(customerId);
             customer.setEmail(email);
             session.update(customer);
             tx.commit();
@@ -118,7 +120,7 @@ public class CustomerDAO {
         Transaction tx = null;
         try (Session session = sessionFactory.openSession()) {
             tx = session.beginTransaction();
-            Customer customer = session.load(Customer.class, customerId);
+            Customer customer = getCustomer(customerId);
             customer.setPhone(phone);
             session.update(customer);
             tx.commit();
@@ -132,7 +134,7 @@ public class CustomerDAO {
         Transaction tx = null;
         try (Session session = sessionFactory.openSession()) {
             tx = session.beginTransaction();
-            Customer customer = session.load(Customer.class, customerId);
+            Customer customer = getCustomer(customerId);
             customer.setCountry(country);
             session.update(customer);
             tx.commit();
@@ -146,7 +148,7 @@ public class CustomerDAO {
         Transaction tx = null;
         try (Session session = sessionFactory.openSession()) {
             tx = session.beginTransaction();
-            Customer customer = session.load(Customer.class, customerId);
+            Customer customer = getCustomer(customerId);
             customer.setCity(city);
             session.update(customer);
             tx.commit();
@@ -160,7 +162,7 @@ public class CustomerDAO {
         Transaction tx = null;
         try (Session session = sessionFactory.openSession()) {
             tx = session.beginTransaction();
-            Customer customer = session.load(Customer.class, customerId);
+            Customer customer = getCustomer(customerId);
             customer.setZipcode(zipcode);
             session.update(customer);
             tx.commit();
@@ -174,7 +176,7 @@ public class CustomerDAO {
         Transaction tx = null;
         try (Session session = sessionFactory.openSession()) {
             tx = session.beginTransaction();
-            Customer customer = session.load(Customer.class, customerId);
+            Customer customer = getCustomer(customerId);
             customer.setAddress(address);
             session.update(customer);
             tx.commit();
