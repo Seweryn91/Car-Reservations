@@ -42,9 +42,10 @@ class CustomerDAOTest {
     @Test
     void testFindAllCustomers() {
         List<Customer> customers = customerDAO.findAllCustomers();
-        Customer firstCustomer = customerDAO.getCustomer(1);
+        Customer firstCustomer = customers.get(0);
         Assertions.assertEquals("Kings Landing", firstCustomer.getCity());
-        Assertions.assertEquals(customers.size(), 3);
+        for(Customer c : customers) System.out.println(c.getFirstName());
+        Assertions.assertEquals(3, customers.size());
     }
 
     @Test
@@ -56,12 +57,21 @@ class CustomerDAOTest {
         customerDAO.deleteCustomer(customer.getCustomerId());
         List<Customer> customersAfterDelete = customerDAO.findAllCustomers();
         int nextNOCustomers = customersAfterDelete.size();
-        Assertions.assertEquals(nextNOCustomers, prevNOCustomers);
+        Assertions.assertEquals(nextNOCustomers, prevNOCustomers-1);
     }
 
     @Test
     void testUpdateCustomerFirstName() {
+        Customer customer = createCustomer();
+        customerDAO.saveCustomer(customer);
+        long customerId = customer.getCustomerId();
+        String name = "Jennie";
+        customerDAO.updateCustomerFirstName(customerId, name);
+        Customer customerAfterUpdate = customerDAO.getCustomer(customerId);
+        Assertions.assertEquals(name, customerAfterUpdate.getFirstName());
+        customerDAO.deleteCustomer(customerId);
     }
+
 
     @Test
     void testUpdateCustomerLastName() {
