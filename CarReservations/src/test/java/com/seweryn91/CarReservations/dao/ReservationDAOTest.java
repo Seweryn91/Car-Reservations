@@ -3,6 +3,7 @@ package com.seweryn91.CarReservations.dao;
 import com.seweryn91.CarReservations.model.Reservation;
 import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,6 +23,7 @@ class ReservationDAOTest {
     SessionFactory sessionFactory;
 
     @Test
+    @DisplayName("Test get reservation from DB")
     void testGetReservation() {
         Reservation reservation = reservationDAO.getReservation(1);
         Assertions.assertEquals(2, reservation.getCustomerId());
@@ -29,6 +31,7 @@ class ReservationDAOTest {
     }
 
     @Test
+    @DisplayName("Test save reservation in DB")
     void testSaveReservation() {
         List<Reservation> reservations = reservationDAO.getAllReservations();
         int prevSize = reservations.size();
@@ -41,6 +44,7 @@ class ReservationDAOTest {
     }
 
     @Test
+    @DisplayName("Test delete reservation from DB")
     void testDeleteReservation() {
         Reservation reservation = createReservation();
         reservationDAO.saveReservation(reservation);
@@ -53,6 +57,7 @@ class ReservationDAOTest {
     }
 
     @Test
+    @DisplayName("Test update car")
     void testUpdateReservationCar() {
         Reservation reservation = createReservation();
         reservationDAO.saveReservation(reservation);
@@ -65,6 +70,7 @@ class ReservationDAOTest {
     }
 
     @Test
+    @DisplayName("Test update customer")
     void testUpdateReservationCustomer() {
         Reservation reservation = createReservation();
         reservationDAO.saveReservation(reservation);
@@ -77,6 +83,7 @@ class ReservationDAOTest {
     }
 
     @Test
+    @DisplayName("Test update start date")
     void testUpdateReservationStart() {
         Reservation reservation = createReservation();
         reservationDAO.saveReservation(reservation);
@@ -96,6 +103,7 @@ class ReservationDAOTest {
     }
 
     @Test
+    @DisplayName("Test update end date")
     void testUpdateReservationEnd() {
         Reservation reservation = createReservation();
         reservationDAO.saveReservation(reservation);
@@ -115,6 +123,7 @@ class ReservationDAOTest {
     }
 
     @Test
+    @DisplayName("Test get all reservations")
     void testGetAllReservations() {
         List<Reservation> reservations = reservationDAO.getAllReservations();
         Assertions.assertEquals(3, reservations.size());
