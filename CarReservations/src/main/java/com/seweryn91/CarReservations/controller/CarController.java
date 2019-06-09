@@ -62,5 +62,18 @@ public class CarController {
         return sb.toString();
     }
 
-    
+    @RequestMapping(value = "/minivan", method = RequestMethod.GET)
+    @ResponseBody
+    public String getAllMinivan() {
+        StringBuilder sb = new StringBuilder();
+        try {
+            List<Car> cars = carDAO.getCarsOfCategory("Minivan");
+            for (Car car : cars)
+                sb.append(car.getBrand()).append(" ").append(car.getModel()).append("<br>");
+        } catch (Exception e) {
+            return e.toString();
+        }
+        return sb.toString();
+
+
 }
