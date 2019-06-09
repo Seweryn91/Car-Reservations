@@ -3,12 +3,12 @@ package com.seweryn91.CarReservations.model;
 import javax.persistence.*;
 import java.util.Date;
 
-@Entity
+@Entity(name = "Reservation")
 @Table(name = "reservation")
 public class Reservation {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "reservation_id")
     private long reservationId;
 
