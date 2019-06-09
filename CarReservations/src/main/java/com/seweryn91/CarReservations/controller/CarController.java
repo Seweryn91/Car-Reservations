@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class CarController {
@@ -90,7 +91,7 @@ public class CarController {
         return sb.toString();
     }
 
-    @RequestMapping(value = "/economic", method = RequestMethod.GET)
+    @RequestMapping(value = "/family", method = RequestMethod.GET)
     @ResponseBody
     public String getAllFamily() {
         StringBuilder sb = new StringBuilder();
@@ -102,6 +103,14 @@ public class CarController {
             return e.toString();
         }
         return sb.toString();
+    }
+
+    @RequestMapping(value = "/airconditioning", method = RequestMethod.GET)
+    @ResponseBody
+    public String getAllAirConditioning() {
+       List<Car> cars = carDAO.findAllCars();
+       return cars.stream()
+               .filter( car -> car.isAutomaticAC()).collect(Collectors.toList()).toString();
     }
 
 
