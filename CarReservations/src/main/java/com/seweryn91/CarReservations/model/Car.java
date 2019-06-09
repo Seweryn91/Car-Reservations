@@ -109,4 +109,13 @@ public class Car {
     public void setAutomaticAC(boolean automaticAC) {
         this.automaticAC = automaticAC;
     }
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Brand: ").append(getBrand()).append("\n");
+        sb.append("Model: ").append(getModel()).append("\n");
+        sb.append("Category: ").append(getCategory()).append("\n");
+        sb.append("Price: ").append(getPrice()).append("\n");
+        return sb.toString();
+    }
 }
