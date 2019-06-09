@@ -66,6 +66,14 @@ class ReservationDAOTest {
 
     @Test
     void testUpdateReservationCustomer() {
+        Reservation reservation = createReservation();
+        reservationDAO.saveReservation(reservation);
+        long customerId = 1;
+        reservationDAO.updateReservationCustomer(reservation.getReservationId(), customerId);
+        Reservation afterUpdate = reservationDAO.getReservation(reservation.getReservationId());
+        long newId = afterUpdate.getCustomerId();
+        Assertions.assertEquals(customerId, newId);
+        reservationDAO.deleteReservation(reservation.getReservationId());
     }
 
     @Test
