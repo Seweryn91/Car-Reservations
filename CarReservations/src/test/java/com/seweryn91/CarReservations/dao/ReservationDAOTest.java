@@ -97,6 +97,21 @@ class ReservationDAOTest {
 
     @Test
     void testUpdateReservationEnd() {
+        Reservation reservation = createReservation();
+        reservationDAO.saveReservation(reservation);
+        String pattern ="yyyy-MM-dd";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        Date endDate = null;
+        try {
+            endDate = simpleDateFormat.parse("2030-05-01");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        reservationDAO.updateReservationStart(reservation.getReservationId(), endDate);
+        Reservation afterUpdate = reservationDAO.getReservation(reservation.getReservationId());
+        String newDate = afterUpdate.getStartDate().toString();
+        Assertions.assertEquals("2030-05-01 00:00:00.0", newDate);
+        reservationDAO.deleteReservation(reservation.getReservationId());
     }
 
     @Test
