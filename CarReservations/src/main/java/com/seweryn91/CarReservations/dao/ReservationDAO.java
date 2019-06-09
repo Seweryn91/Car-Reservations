@@ -22,6 +22,7 @@ public class ReservationDAO {
         try (Session session = sessionFactory.openSession()) {
             tx = session.beginTransaction();
             reservation = session.byId(Reservation.class).load(reservationId);
+            tx.commit();
         } catch (Exception e) {
             if (tx != null) tx.rollback();
             e.printStackTrace();
@@ -48,6 +49,7 @@ public class ReservationDAO {
             tx = session.beginTransaction();
             Reservation reservation = getReservation(reservationId);
             session.delete(reservation);
+            tx.commit();
         } catch (Exception e) {
             if (tx != null) tx.rollback();
             e.printStackTrace();
@@ -61,6 +63,7 @@ public class ReservationDAO {
             Reservation reservation = getReservation(reservationId);
             reservation.setCarId(carId);
             session.update(reservation);
+            tx.commit();
         } catch (Exception e) {
             if (tx != null) tx.rollback();
             e.printStackTrace();
@@ -74,6 +77,7 @@ public class ReservationDAO {
             Reservation reservation = getReservation(reservationId);
             reservation.setCustomerId(customerId);
             session.update(reservation);
+            tx.commit();
         } catch (Exception e) {
             if (tx != null) tx.rollback();
             e.printStackTrace();
@@ -87,6 +91,7 @@ public class ReservationDAO {
             Reservation reservation = getReservation(reservationId);
             reservation.setStartDate(startDate);
             session.update(reservation);
+            tx.commit();
         } catch (Exception e) {
             if (tx != null) tx.rollback();
             e.printStackTrace();
@@ -100,6 +105,7 @@ public class ReservationDAO {
             Reservation reservation = getReservation(reservationId);
             reservation.setEndDate(endDate);
             session.update(reservation);
+            tx.commit();
         } catch (Exception e) {
             if (tx != null) tx.rollback();
             e.printStackTrace();
