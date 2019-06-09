@@ -47,4 +47,20 @@ public class CarController {
         }
         return sb.toString();
     }
+
+    @RequestMapping(value = "/economic", method = RequestMethod.GET)
+    @ResponseBody
+    public String getAllEconomic() {
+        StringBuilder sb = new StringBuilder();
+        try {
+            List<Car> cars = carDAO.getCarsOfCategory("Economic");
+            for (Car car : cars)
+                sb.append(car.getBrand()).append(" ").append(car.getModel()).append("<br>");
+        } catch (Exception e) {
+            return e.toString();
+        }
+        return sb.toString();
+    }
+
+    
 }
