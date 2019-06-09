@@ -116,6 +116,11 @@ class ReservationDAOTest {
 
     @Test
     void testGetAllReservations() {
+        List<Reservation> reservations = reservationDAO.getAllReservations();
+        Assertions.assertEquals(3, reservations.size());
+        Reservation reservation1 = reservations.get(0);
+        Assertions.assertEquals(9, reservation1.getCarId());
+        Assertions.assertEquals(2, reservation1.getCustomerId());
     }
 
     Reservation createReservation() {
