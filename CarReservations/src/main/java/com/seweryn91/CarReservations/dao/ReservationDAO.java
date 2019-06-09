@@ -66,7 +66,7 @@ public class ReservationDAO {
         }
     }
 
-    public void updateResrvationCustomer(long reservationId, long customerId) {
+    public void updateReservationCustomer(long reservationId, long customerId) {
         Transaction tx = null;
         try (Session session = sessionFactory.openSession()) {
             tx = session.beginTransaction();
