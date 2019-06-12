@@ -6,6 +6,8 @@ import com.seweryn91.CarReservations.model.Customer;
 import com.seweryn91.CarReservations.model.Reservation;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class JSONFormatter {
 
@@ -36,5 +38,18 @@ public class JSONFormatter {
         return new Gson().fromJson(reservationJson, Reservation.class);
     }
 
+    public String serializeCollectionCars(List<Car> cars) {
+        Gson carsGson = new Gson();
+        return carsGson.toJson(cars);
+    }
 
+    public String serializeCollectionCustomers(List<Customer> customers) {
+        Gson customersGson = new Gson();
+        return customersGson.toJson(customers);
+    }
+
+    public String serializeCollectionReservations(List<Reservation> reservations) {
+        Gson reservationsGson = new Gson();
+        return reservationsGson.toJson(reservations);
+    }
 }
