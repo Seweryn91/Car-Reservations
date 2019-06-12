@@ -24,5 +24,17 @@ public class JSONFormatter {
        return reservationGson.toJson(reservation);
     }
 
+    public Car deserializeCar(String carJson) {
+        return new Gson().fromJson(carJson, Car.class);
+    }
+
+    public Customer deserializeCustomer(String customerJson) {
+        return new Gson().fromJson(customerJson, Customer.class);
+    }
+
+    public Reservation deserializeReservation(String reservationJson) {
+        return new Gson().fromJson(reservationJson, Reservation.class);
+    }
+
 
 }
