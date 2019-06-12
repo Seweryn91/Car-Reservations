@@ -1,11 +1,13 @@
 package com.seweryn91.CarReservations.utils;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.seweryn91.CarReservations.model.Car;
 import com.seweryn91.CarReservations.model.Customer;
 import com.seweryn91.CarReservations.model.Reservation;
 import org.springframework.stereotype.Component;
 
+import java.lang.reflect.Type;
 import java.util.List;
 
 @Component
@@ -51,5 +53,24 @@ public class JSONFormatter {
     public String serializeCollectionReservations(List<Reservation> reservations) {
         Gson reservationsGson = new Gson();
         return reservationsGson.toJson(reservations);
+    }
+
+    private Object fromJson(String json, Type type) {
+        return new Gson().fromJson(json, type);
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<Car> deserializeCollectionCars(String carsJson) {
+        return (List<Car>) fromJson(carsJson, new TypeToken<List<Car>>(){}.getType());
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<Customer> deserializeCollectionCustomers(String customersJson) {
+        return (List<Customer>) fromJson(customersJson, new TypeToken<List<Customer>>(){}.getType());
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<Reservation> deserializeCollectionReservation(String reservationsJson) {
+        return (List<Reservation>) fromJson(reservationsJson, new TypeToken<List<Reservation>>(){}.getType());
     }
 }
