@@ -35,26 +35,24 @@ public class CarController {
         return sb.toString();
     }
 
-    @RequestMapping(value = "/compact", method = RequestMethod.GET)
+    @RequestMapping(value = "cars/compact", method = RequestMethod.GET)
     public String getAllCompact() {
         StringBuilder sb = new StringBuilder();
         try {
             List<Car> cars = carDAO.getCarsOfCategory("Compact");
-            for (Car car : cars)
-                sb.append(jsonFormatter.serializeCollectionCars(cars));
+            sb.append(jsonFormatter.serializeCollectionCars(cars));
         } catch (Exception e) {
             return e.toString();
         }
         return sb.toString();
     }
 
-    @RequestMapping(value = "/economic", method = RequestMethod.GET)
+    @RequestMapping(value = "cars/economic", method = RequestMethod.GET)
     public String getAllEconomic() {
         StringBuilder sb = new StringBuilder();
         try {
             List<Car> cars = carDAO.getCarsOfCategory("Economic");
-            for (Car car : cars)
-                sb.append(jsonFormatter.serializeCollectionCars(cars));
+            sb.append(jsonFormatter.serializeCollectionCars(cars));
         } catch (Exception e) {
             return e.toString();
         }
@@ -66,34 +64,31 @@ public class CarController {
         StringBuilder sb = new StringBuilder();
         try {
             List<Car> cars = carDAO.getCarsOfCategory("Minivan");
-            for (Car car : cars)
-                sb.append(jsonFormatter.serializeCollectionCars(cars));
+            sb.append(jsonFormatter.serializeCollectionCars(cars));
         } catch (Exception e) {
             return e.toString();
         }
         return sb.toString();
     }
 
-    @RequestMapping(value = "/suv", method = RequestMethod.GET)
+    @RequestMapping(value = "cars/suv", method = RequestMethod.GET)
     public String getAllSUV() {
         StringBuilder sb = new StringBuilder();
         try {
             List<Car> cars = carDAO.getCarsOfCategory("SUV");
-            for (Car car : cars)
-                sb.append(jsonFormatter.serializeCollectionCars(cars));
+            sb.append(jsonFormatter.serializeCollectionCars(cars));
         } catch (Exception e) {
             return e.toString();
         }
         return sb.toString();
     }
 
-    @RequestMapping(value = "/family", method = RequestMethod.GET)
+    @RequestMapping(value = "cars/family", method = RequestMethod.GET)
     public String getAllFamily() {
         StringBuilder sb = new StringBuilder();
         try {
             List<Car> cars = carDAO.getCarsOfCategory("Family");
-            for (Car car : cars)
-                sb.append(jsonFormatter.serializeCollectionCars(cars));
+            sb.append(jsonFormatter.serializeCollectionCars(cars));
         } catch (Exception e) {
             return e.toString();
         }
@@ -102,15 +97,28 @@ public class CarController {
 
     @RequestMapping(value = "/airconditioning", method = RequestMethod.GET)
     public String getAllAirConditioning() {
-       List<Car> cars = carDAO.findAllCars();
-       return cars.stream()
-               .filter( car -> car.isAutomaticAC()).collect(Collectors.toList()).toString();
+        StringBuilder sb = new StringBuilder();
+        try {
+        List<Car> cars = carDAO.findAllCars();
+        List<Car> carsWithAC = cars.stream()
+               .filter( car -> car.isAutomaticAC()).collect(Collectors.toList());
+            sb.append(jsonFormatter.serializeCollectionCars(carsWithAC));
+        } catch (Exception e) {
+            return e.toString();
+        }
+        return sb.toString();
     }
 
     @RequestMapping(value = "/today")
     public String getCarsAvailableToday() {
-        List<Car> carsAvailable = carDAO.getAllCarsAvailableToday();
-        return jsonFormatter.serializeCollectionCars(carsAvailable);
+        StringBuilder sb = new StringBuilder();
+        try {
+            List<Car> carsAvailable = carDAO.getAllCarsAvailableToday();
+            sb.append(jsonFormatter.serializeCollectionCars(carsAvailable));
+        } catch (Exception e) {
+            return e.toString();
+        }
+        return sb.toString();
     }
 
 }
