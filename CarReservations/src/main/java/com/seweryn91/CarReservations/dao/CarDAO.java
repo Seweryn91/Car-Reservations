@@ -217,4 +217,19 @@ public class CarDAO {
         }
     }
 
+
+    @SuppressWarnings("unchecked")
+    public List<Car> getAllCarsAvailableToday() {
+        Transaction tx = null;
+        List<Car> carsAvailableToday = null;
+        try (Session session = sessionFactory.openSession()) {
+            tx = session.beginTransaction();
+            carsAvailableToday = (List<Car>) session.createQuery(" select c from Car c left join Reservation r on c.carId = r.carId where (current_date not between r.startDate and r.endDate) or (r.startDate is null) or (r.endDate is null) order by c.carId").list();
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+        }
+        return carsAvailableToday;
+    }
 }
