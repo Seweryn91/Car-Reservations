@@ -2,6 +2,7 @@ package com.seweryn91.CarReservations.model;
 
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity(name = "Customer")
 @Table(name = "customer")
@@ -106,5 +107,25 @@ public class Customer{
 
     public void setZipcode(String zipcode) {
         this.zipcode = zipcode;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Customer customer = (Customer) o;
+        return firstName.equals(customer.firstName) &&
+                lastName.equals(customer.lastName) &&
+                email.equals(customer.email) &&
+                phone.equals(customer.phone) &&
+                Objects.equals(country, customer.country) &&
+                Objects.equals(city, customer.city) &&
+                Objects.equals(zipcode, customer.zipcode) &&
+                Objects.equals(address, customer.address);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstName, lastName, email, phone, country, city, zipcode, address);
     }
 }
