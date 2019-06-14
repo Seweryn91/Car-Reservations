@@ -1,6 +1,7 @@
 package com.seweryn91.CarReservations.model;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity(name = "Car")
 @Table(name = "car")
@@ -117,5 +118,26 @@ public class Car {
         sb.append("Category: ").append(getCategory()).append("\n");
         sb.append("Price: ").append(getPrice()).append("\n");
         return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Car car = (Car) o;
+        return year == car.year &&
+                Double.compare(car.price, price) == 0 &&
+                seats == car.seats &&
+                doors == car.doors &&
+                automaticGearbox == car.automaticGearbox &&
+                automaticAC == car.automaticAC &&
+                brand.equals(car.brand) &&
+                model.equals(car.model) &&
+                category.equals(car.category);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(brand, model, year, price, category, seats, doors, automaticGearbox, automaticAC);
     }
 }
