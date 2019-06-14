@@ -144,6 +144,16 @@ class CarDAOTest {
     }
 
     @Test
+    @DisplayName("Test update car model")
+    void testUpdateCarModel() {
+        long carToUpdateId = testCarId;
+        String model = "2137";
+        carDAO.updateCarModel(carToUpdateId, model);
+        Car carAfterUpdate = carDAO.getCarById(carToUpdateId);
+        Assertions.assertEquals(model, carAfterUpdate.getModel());
+    }
+
+    @Test
     @DisplayName("Test update seats")
     void testUpdateCarSeats() {
         long carToUpdateId = testCarId;
