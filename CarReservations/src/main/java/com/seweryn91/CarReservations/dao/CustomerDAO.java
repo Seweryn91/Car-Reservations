@@ -63,10 +63,8 @@ public class CustomerDAO {
         try (Session session = sessionFactory.openSession()) {
             tx = session.beginTransaction();
             Customer customerToDelete = session.get(Customer.class, customerId);
-            if (customerToDelete != null) {
                 session.delete(customerToDelete);
                 tx.commit();
-            }
         } catch (Exception e) {
             if (tx != null) tx.rollback();
             e.printStackTrace();
