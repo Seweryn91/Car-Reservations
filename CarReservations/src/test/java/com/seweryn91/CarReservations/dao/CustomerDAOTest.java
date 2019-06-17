@@ -180,9 +180,9 @@ class CustomerDAOTest {
     void testUpdateCustomerAddress() {
         long customerId = testCustomerId;
         String address = "007 Bond St.";
-        customerDAO.updateCustomerEmail(customerId, address);
+        customerDAO.updateCustomerAddress(customerId, address);
         Customer customerAfterUpdate = customerDAO.getCustomer(customerId);
-        Assertions.assertEquals(address, customerAfterUpdate.getEmail());
+        Assertions.assertEquals(address, customerAfterUpdate.getAddress());
     }
 
 
