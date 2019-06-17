@@ -1,10 +1,10 @@
 INSERT INTO car(car_id, brand, model, year, price, category, seats, doors, automaticGearbox, automaticAC) VALUES
-(DEFAULT, 'Opel','Adam', 2019, 15.00, 'Economic', 5,5, FALSE, FALSE),
+(DEFAULT, 'Opel','Adam', 2019, 15.00, 'Economic', 5,3, FALSE, FALSE),
 (DEFAULT, 'Volkswagen', 'UP!', 2018, 15.00, 'Economic', 5, 5, FALSE, FALSE),
 (DEFAULT, 'Fiat', '500', 2018, 17.00, 'Economic', 4,3, FALSE, TRUE),
 (DEFAULT, 'Citroën','DS3', 2016, 17.00, 'Economic', 5, 3, TRUE, FALSE),
 (DEFAULT, 'Ford', 'Fiesta', 2018, 17.00, 'Economic', 5, 5, FALSE, TRUE),
-(DEFAULT, 'Renault', 'Clio', 2018, 17.00, 'Economic', 5,5, FALSE, TRUE),
+(DEFAULT, 'Renault', 'Clio', 2018, 17.00, 'Economic', 5,3, FALSE, TRUE),
 (DEFAULT, 'Volkswagen', 'Polo', 2016, 13.00, 'Economic', 5, 5, FALSE, FALSE),
 (DEFAULT, 'Volkswagen', 'Golf', 2016, 17.00, 'Compact', 5, 5, FALSE, TRUE),
 (DEFAULT, 'Alfa Romeo', 'Gulietta', 2016, 18.00, 'Compact', 5, 5, FALSE, FALSE),
@@ -16,7 +16,7 @@ INSERT INTO car(car_id, brand, model, year, price, category, seats, doors, autom
 (DEFAULT, 'Seat', 'Leon', 2013, 21.00, 'Family', 5, 5, FALSE, TRUE),
 (DEFAULT, 'Ford', 'Focus', 2015, 20.00, 'Family', 5, 5, FALSE, TRUE),
 (DEFAULT, 'Ford', 'C-Max', 2015, 20.00, 'Family', 5, 5, FALSE, TRUE),
-(DEFAULT, 'Renault', 'Scenic', 2015, 20.00, 'Family', 5, 5, FALSE, TRUE),
+(DEFAULT, 'Renault', 'Grand Scenic', 2015, 20.00, 'Family', 5, 5, FALSE, TRUE),
 (DEFAULT, 'Nissan', 'Juke', 2017, 19.00, 'SUV', 5, 5, FALSE, TRUE),
 (DEFAULT, 'Land Rover', 'Range Rover Evoque', 2013, 18.00, 'SUV', 5, 5, FALSE, TRUE),
 (DEFAULT, 'Volkswagen', 'Touareg', 2018, 25.00, 'SUV', 5, 5, TRUE, TRUE);
