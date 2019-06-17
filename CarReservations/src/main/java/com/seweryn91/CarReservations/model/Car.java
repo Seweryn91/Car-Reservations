@@ -39,6 +39,9 @@ public class Car {
     @Column(name = "automaticAC")
     private boolean automaticAC;
 
+    @Column(name = "imagesource")
+    private String imageSource;
+
     public long getCarId() {
         return carId;
     }
@@ -110,6 +113,10 @@ public class Car {
     public void setAutomaticAC(boolean automaticAC) {
         this.automaticAC = automaticAC;
     }
+
+    public String getImageSource() { return imageSource;}
+
+    public void setImageSource(String imageSource) { this.imageSource = imageSource; }
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
