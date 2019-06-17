@@ -1,4 +1,4 @@
-CREATE TABLE car (car_id SERIAL PRIMARY KEY, brand VARCHAR(64) NOT NULL, model VARCHAR(64) NOT NULL, year INTEGER, price FLOAT8 NOT NULL, category VARCHAR(64), seats INTEGER, doors INTEGER, automaticGearbox BOOLEAN, automaticAC BOOLEAN);
+CREATE TABLE car (car_id SERIAL PRIMARY KEY, brand VARCHAR(64) NOT NULL, model VARCHAR(64) NOT NULL, year INTEGER, price FLOAT8 NOT NULL, category VARCHAR(64), seats INTEGER, doors INTEGER, automaticGearbox BOOLEAN, automaticAC BOOLEAN, imageSource TEXT DEFAULT NULL);
 
 CREATE TABLE reservation (reservation_id SERIAL PRIMARY KEY, car_id INTEGER NOT NULL, customer_id INTEGER NOT NULL, reservation_start DATE, reservation_end DATE);
 
