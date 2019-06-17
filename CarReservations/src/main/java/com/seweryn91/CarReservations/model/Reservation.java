@@ -2,6 +2,7 @@ package com.seweryn91.CarReservations.model;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Objects;
 
 @Entity(name = "Reservation")
 @Table(name = "reservation")
@@ -62,5 +63,21 @@ public class Reservation {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Reservation that = (Reservation) o;
+        return carId == that.carId &&
+                customerId == that.customerId &&
+                startDate.equals(that.startDate) &&
+                endDate.equals(that.endDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(carId, customerId, startDate, endDate);
     }
 }
