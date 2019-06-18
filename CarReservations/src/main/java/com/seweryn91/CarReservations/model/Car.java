@@ -127,6 +127,7 @@ public class Car {
         return sb.toString();
     }
 
+    /**Method equals() was overriden to avoid many assertions in one unit test.*/
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
