@@ -195,5 +195,15 @@ class CarDAOTest {
         Assertions.assertTrue(carAfterUpdate.isAutomaticAC());
     }
 
+    @Test
+    @DisplayName("Test update image")
+    void testUpdateImage() {
+        long carToUpdateId = testCarId;
+        String imageSource = "http://clipart-library.com/data_images/269418.png";
+        carDAO.updateCarImageSource(carToUpdateId, imageSource);
+        Car carAfterUpdate = carDAO.getCarById(carToUpdateId);
+        Assertions.assertEquals(imageSource, carAfterUpdate.getImageSource());
+    }
+
 
 }
