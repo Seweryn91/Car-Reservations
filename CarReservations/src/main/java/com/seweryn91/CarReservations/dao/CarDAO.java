@@ -234,4 +234,18 @@ public class CarDAO {
         }
         return carsAvailableToday;
     }
+
+    public void updateCarImageSource(long carId, String imageSource) {
+        Transaction tx = null;
+        try (Session session = sessionFactory.openSession()) {
+            tx = session.beginTransaction();
+            Car car = getCarById(carId);
+            car.setImageSource(imageSource);
+            session.update(car);
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+        }
+    }
 }
