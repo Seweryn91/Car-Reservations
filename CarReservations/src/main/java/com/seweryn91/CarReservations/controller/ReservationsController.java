@@ -34,4 +34,8 @@ public class ReservationsController {
         }
         return sb.toString();
     }
+
+    public Double getPrice(long reservationId) {
+        return reservationDAO.getPrice(reservationId);
+    }
 }
