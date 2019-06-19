@@ -5,9 +5,7 @@ import com.seweryn91.CarReservations.model.Car;
 import com.seweryn91.CarReservations.utils.JSONFormatter;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -119,6 +117,20 @@ public class CarController {
             return e.toString();
         }
         return sb.toString();
+    }
+
+    @RequestMapping(value = "/cars/{carId}", method = RequestMethod.GET)
+    public String getCar(@PathVariable(value = "carId") Long carId) {
+        //TODO: Implement fool-proofing
+        String carString = "";
+        try {
+        Car car = carDAO.getCarById(carId);
+        if (car == null) throw new IllegalArgumentException("Car not found");
+        carString = jsonFormatter.serialize(car);
+        } catch (Exception e) {
+            return e.toString();
+        }
+        return carString;
     }
 
 }
