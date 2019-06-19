@@ -173,4 +173,12 @@ class ReservationDAOTest {
         Assertions.assertEquals(4, reservations.size());
     }
 
+    @Test
+    @DisplayName("Test get price")
+    void testGetPrice() {
+        Double price = 126.00;
+        Double actual = reservationDAO.getPrice(1);
+        Assertions.assertEquals(price, actual);
+    }
+
 }
