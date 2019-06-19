@@ -126,4 +126,21 @@ public class ReservationDAO {
         }
         return allReservations;
     }
+
+    @SuppressWarnings("unchecked")
+    public Double getPrice(long reservationId) {
+        Transaction tx = null;
+        Double price = 0.00;
+        try (Session session = sessionFactory.openSession()) {
+            tx = session.beginTransaction();
+            price = (Double) session.createQuery("select (r.endDate-r.startDate) * (c.price) from Reservation r" +
+                    " inner join Car c on c.id = r.carId where r.id = :id")
+                    .setParameter("id", reservationId).list().get(0);
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null) tx.rollback();
+            e.printStackTrace();
+        }
+        return price;
+    }
 }
