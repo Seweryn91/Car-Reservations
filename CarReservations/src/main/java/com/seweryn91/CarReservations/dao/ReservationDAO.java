@@ -89,6 +89,11 @@ public class ReservationDAO {
         try (Session session = sessionFactory.openSession()) {
             tx = session.beginTransaction();
             Reservation reservation = getReservation(reservationId);
+
+            if (startDate.compareTo(reservation.getEndDate()) >= 0) {
+                throw new IllegalArgumentException("Start date must be before end date!");
+            }
+
             reservation.setStartDate(startDate);
             session.update(reservation);
             tx.commit();
@@ -103,6 +108,11 @@ public class ReservationDAO {
         try (Session session = sessionFactory.openSession()) {
             tx = session.beginTransaction();
             Reservation reservation = getReservation(reservationId);
+
+            if (endDate.compareTo(reservation.getStartDate()) <= 0) {
+                throw new IllegalArgumentException("End date must be later than start date!");
+            }
+
             reservation.setEndDate(endDate);
             session.update(reservation);
             tx.commit();
