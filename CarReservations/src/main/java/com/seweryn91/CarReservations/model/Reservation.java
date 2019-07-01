@@ -1,6 +1,9 @@
 package com.seweryn91.CarReservations.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.Objects;
 
@@ -19,9 +22,13 @@ public class Reservation {
     @Column(name = "customer_id")
     private long customerId;
 
+    @NotNull
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
     @Column(name = "reservation_start")
     private Date startDate;
 
+    @NotNull
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
     @Column(name = "reservation_end")
     private Date endDate;
 
@@ -53,17 +60,15 @@ public class Reservation {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
 
-    public Date getEndDate() {
-        return endDate;
-    }
+    //TODO: Implement Date validation
+    public void setStartDate(Date startDate) { this.startDate = startDate; }
 
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
-    }
+    public Date getEndDate() { return endDate; }
+
+    //TODO: Implement Date validation
+    public void setEndDate(Date endDate) { this.endDate = endDate; }
+
 
     @Override
     public boolean equals(Object o) {
