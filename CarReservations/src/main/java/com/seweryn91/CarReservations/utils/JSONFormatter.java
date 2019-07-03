@@ -9,11 +9,17 @@ import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class JSONFormatter {
 
     public String serialize(Car car) {
+        Gson carGson = new Gson();
+        return carGson.toJson(car);
+    }
+
+    public String serialize(Optional<Car> car) {
         Gson carGson = new Gson();
         return carGson.toJson(car);
     }
