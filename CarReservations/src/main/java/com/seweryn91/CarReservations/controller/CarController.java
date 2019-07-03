@@ -1,135 +1,131 @@
 package com.seweryn91.CarReservations.controller;
 
-import com.seweryn91.CarReservations.dao.CarDAO;
 import com.seweryn91.CarReservations.model.Car;
+import com.seweryn91.CarReservations.repository.CarRepository;
+import com.seweryn91.CarReservations.service.CarService;
 import com.seweryn91.CarReservations.utils.JSONFormatter;
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
+import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @RestController
 public class CarController {
 
     @Autowired
-    private SessionFactory sessionFactory;
-
-    @Autowired
-    private CarDAO carDAO;
-
-    @Autowired
     private JSONFormatter jsonFormatter;
+
+    @Autowired
+    private CarRepository carRepository;
+
+    @Autowired
+    private CarService carService;
+
+    private List<Car> cars = new ArrayList<>();
 
     @RequestMapping(value = "/cars", method = RequestMethod.GET)
     public String getAllCars() {
         StringBuilder sb = new StringBuilder();
-        try {
-            sb.append(jsonFormatter.serializeCollectionCars(carDAO.findAllCars()));
-        } catch (Exception e) {
-            return e.toString();
+        if (cars.isEmpty()) {
+            carRepository.findAll().forEach(cars::add);
         }
+        sb.append(jsonFormatter.serializeCollectionCars(cars));
         return sb.toString();
     }
 
-    @RequestMapping(value = "cars/compact", method = RequestMethod.GET)
+    @RequestMapping(value = "/cars/compact", method = RequestMethod.GET)
     public String getAllCompact() {
         StringBuilder sb = new StringBuilder();
-        try {
-            List<Car> cars = carDAO.getCarsOfCategory("Compact");
-            sb.append(jsonFormatter.serializeCollectionCars(cars));
-        } catch (Exception e) {
-            return e.toString();
+        List<Car> compacts = new ArrayList<>();
+        if (cars.isEmpty()) {
+            carRepository.findAll().forEach(cars::add);
         }
+        cars.stream().filter(c -> c.getCategory().equals("Compact")).forEach(compacts::add);
+        sb.append(jsonFormatter.serializeCollectionCars(compacts));
         return sb.toString();
     }
 
-    @RequestMapping(value = "cars/economic", method = RequestMethod.GET)
+    @RequestMapping(value = "/cars/economic", method = RequestMethod.GET)
     public String getAllEconomic() {
         StringBuilder sb = new StringBuilder();
-        try {
-            List<Car> cars = carDAO.getCarsOfCategory("Economic");
-            sb.append(jsonFormatter.serializeCollectionCars(cars));
-        } catch (Exception e) {
-            return e.toString();
+        List<Car> economics = new ArrayList<>();
+        if (cars.isEmpty()) {
+            carRepository.findAll().forEach(cars::add);
         }
+        cars.stream().filter(c -> c.getCategory().equals("Economic")).forEach(economics::add);
+        sb.append(jsonFormatter.serializeCollectionCars(economics));
         return sb.toString();
     }
 
-    @RequestMapping(value = "cars/minivan", method = RequestMethod.GET)
+    @RequestMapping(value = "/cars/minivan", method = RequestMethod.GET)
     public String getAllMinivan() {
         StringBuilder sb = new StringBuilder();
-        try {
-            List<Car> cars = carDAO.getCarsOfCategory("Minivan");
-            sb.append(jsonFormatter.serializeCollectionCars(cars));
-        } catch (Exception e) {
-            return e.toString();
+        List<Car> minivans = new ArrayList<>();
+        if (cars.isEmpty()) {
+            carRepository.findAll().forEach(cars::add);
         }
+        cars.stream().filter(c -> c.getCategory().equals("Minivan")).forEach(minivans::add);
+        sb.append(jsonFormatter.serializeCollectionCars(minivans));
         return sb.toString();
     }
 
-    @RequestMapping(value = "cars/suv", method = RequestMethod.GET)
+    @RequestMapping(value = "/cars/suv", method = RequestMethod.GET)
     public String getAllSUV() {
         StringBuilder sb = new StringBuilder();
-        try {
-            List<Car> cars = carDAO.getCarsOfCategory("SUV");
-            sb.append(jsonFormatter.serializeCollectionCars(cars));
-        } catch (Exception e) {
-            return e.toString();
+        List<Car> suvs = new ArrayList<>();
+        if (cars.isEmpty()) {
+            carRepository.findAll().forEach(cars::add);
         }
+        cars.stream().filter(c -> c.getCategory().equals("SUV")).forEach(suvs::add);
+        sb.append(jsonFormatter.serializeCollectionCars(suvs));
         return sb.toString();
     }
 
-    @RequestMapping(value = "cars/family", method = RequestMethod.GET)
+    @RequestMapping(value = "/cars/family", method = RequestMethod.GET)
     public String getAllFamily() {
         StringBuilder sb = new StringBuilder();
-        try {
-            List<Car> cars = carDAO.getCarsOfCategory("Family");
-            sb.append(jsonFormatter.serializeCollectionCars(cars));
-        } catch (Exception e) {
-            return e.toString();
+        List<Car> families = new ArrayList<>();
+        if (cars.isEmpty()) {
+            carRepository.findAll().forEach(cars::add);
         }
+        cars.stream().filter(c -> c.getCategory().equals("Family")).forEach(families::add);
+        sb.append(jsonFormatter.serializeCollectionCars(families));
         return sb.toString();
     }
 
-    @RequestMapping(value = "/airconditioning", method = RequestMethod.GET)
+    @RequestMapping(value = "/cars/airconditioning", method = RequestMethod.GET)
     public String getAllAirConditioning() {
         StringBuilder sb = new StringBuilder();
-        try {
-        List<Car> cars = carDAO.findAllCars();
-        List<Car> carsWithAC = cars.stream()
-               .filter( car -> car.isAutomaticAC()).collect(Collectors.toList());
-            sb.append(jsonFormatter.serializeCollectionCars(carsWithAC));
-        } catch (Exception e) {
-            return e.toString();
+        if (cars.isEmpty()) {
+            carRepository.findAll().forEach(cars::add);
         }
+        List<Car> carsWithAC = new ArrayList<>();
+        cars.stream().filter(Car::isAutomaticAC).forEach(carsWithAC::add);
+        sb.append(jsonFormatter.serializeCollectionCars(carsWithAC));
         return sb.toString();
     }
 
-    @RequestMapping(value = "/today")
+    @RequestMapping(value = "/cars/today")
     public String getCarsAvailableToday() {
         StringBuilder sb = new StringBuilder();
-        try {
-            List<Car> carsAvailable = carDAO.getAllCarsAvailableToday();
-            sb.append(jsonFormatter.serializeCollectionCars(carsAvailable));
-        } catch (Exception e) {
-            return e.toString();
-        }
+        List<Car> carsAvailable = carService.getAllCarsAvailableToday();
+        sb.append(jsonFormatter.serializeCollectionCars(carsAvailable));
         return sb.toString();
     }
 
     @RequestMapping(value = "/cars/{carId}", method = RequestMethod.GET)
     public String getCar(@PathVariable(value = "carId") Long carId) {
-        //TODO: Implement fool-proofing
         String carString = "";
-        try {
-        Car car = carDAO.getCarById(carId);
-        if (car == null) throw new IllegalArgumentException("Car not found");
-        carString = jsonFormatter.serialize(car);
-        } catch (Exception e) {
-            return e.toString();
-        }
+        Optional<Car> car = carRepository.findById(carId);
+        if (!car.isPresent()) throw new EntityNotFoundException("Provided incorrect ID");
+        Car carObject = car.get();
+        carString = jsonFormatter.serialize(carObject);
         return carString;
     }
 
