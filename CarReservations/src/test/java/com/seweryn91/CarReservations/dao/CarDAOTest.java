@@ -58,9 +58,15 @@ class CarDAOTest {
         carDAO.findAllCars().forEach(cars::add);
         int prevSize = cars.size();
         Car car = new Car();
-        car.setModel("Model");
         car.setBrand("Brand");
-        car.setPrice(3.0);
+        car.setModel("Model");
+        car.setYear(2000);
+        car.setPrice(8.5);
+        car.setCategory("Test");
+        car.setSeats(8);
+        car.setDoors(5);
+        car.setAutomaticAC(true);
+        car.setAutomaticGearbox(true);
         carDAO.saveCar(car);
         long testCarId2 = car.getCarId();
         List<Car> carsAfterInsert = new ArrayList<>();
