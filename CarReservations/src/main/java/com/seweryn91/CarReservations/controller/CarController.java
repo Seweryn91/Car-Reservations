@@ -1,7 +1,7 @@
 package com.seweryn91.CarReservations.controller;
 
+import com.seweryn91.CarReservations.dao.CarDAO;
 import com.seweryn91.CarReservations.model.Car;
-import com.seweryn91.CarReservations.repository.CarRepository;
 import com.seweryn91.CarReservations.service.CarService;
 import com.seweryn91.CarReservations.utils.JSONFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class CarController {
@@ -22,7 +21,7 @@ public class CarController {
     private JSONFormatter jsonFormatter;
 
     @Autowired
-    private CarRepository carRepository;
+    private CarDAO carDAO;
 
     @Autowired
     private CarService carService;
@@ -33,7 +32,7 @@ public class CarController {
     public String getAllCars() {
         StringBuilder sb = new StringBuilder();
         if (cars.isEmpty()) {
-            carRepository.findAll().forEach(cars::add);
+            carDAO.findAllCars().forEach(cars::add);
         }
         sb.append(jsonFormatter.serializeCollectionCars(cars));
         return sb.toString();
@@ -44,7 +43,7 @@ public class CarController {
         StringBuilder sb = new StringBuilder();
         List<Car> compacts = new ArrayList<>();
         if (cars.isEmpty()) {
-            carRepository.findAll().forEach(cars::add);
+            carDAO.findAllCars().forEach(cars::add);
         }
         cars.stream().filter(c -> c.getCategory().equals("Compact")).forEach(compacts::add);
         sb.append(jsonFormatter.serializeCollectionCars(compacts));
@@ -56,7 +55,7 @@ public class CarController {
         StringBuilder sb = new StringBuilder();
         List<Car> economics = new ArrayList<>();
         if (cars.isEmpty()) {
-            carRepository.findAll().forEach(cars::add);
+            carDAO.findAllCars().forEach(cars::add);
         }
         cars.stream().filter(c -> c.getCategory().equals("Economic")).forEach(economics::add);
         sb.append(jsonFormatter.serializeCollectionCars(economics));
@@ -68,7 +67,7 @@ public class CarController {
         StringBuilder sb = new StringBuilder();
         List<Car> minivans = new ArrayList<>();
         if (cars.isEmpty()) {
-            carRepository.findAll().forEach(cars::add);
+            carDAO.findAllCars().forEach(cars::add);
         }
         cars.stream().filter(c -> c.getCategory().equals("Minivan")).forEach(minivans::add);
         sb.append(jsonFormatter.serializeCollectionCars(minivans));
@@ -80,7 +79,7 @@ public class CarController {
         StringBuilder sb = new StringBuilder();
         List<Car> suvs = new ArrayList<>();
         if (cars.isEmpty()) {
-            carRepository.findAll().forEach(cars::add);
+            carDAO.findAllCars().forEach(cars::add);
         }
         cars.stream().filter(c -> c.getCategory().equals("SUV")).forEach(suvs::add);
         sb.append(jsonFormatter.serializeCollectionCars(suvs));
@@ -92,7 +91,7 @@ public class CarController {
         StringBuilder sb = new StringBuilder();
         List<Car> families = new ArrayList<>();
         if (cars.isEmpty()) {
-            carRepository.findAll().forEach(cars::add);
+            carDAO.findAllCars().forEach(cars::add);
         }
         cars.stream().filter(c -> c.getCategory().equals("Family")).forEach(families::add);
         sb.append(jsonFormatter.serializeCollectionCars(families));
@@ -103,7 +102,7 @@ public class CarController {
     public String getAllAirConditioning() {
         StringBuilder sb = new StringBuilder();
         if (cars.isEmpty()) {
-            carRepository.findAll().forEach(cars::add);
+            carDAO.findAllCars().forEach(cars::add);
         }
         List<Car> carsWithAC = new ArrayList<>();
         cars.stream().filter(Car::isAutomaticAC).forEach(carsWithAC::add);
@@ -122,10 +121,9 @@ public class CarController {
     @RequestMapping(value = "/cars/{carId}", method = RequestMethod.GET)
     public String getCar(@PathVariable(value = "carId") Long carId) {
         String carString = "";
-        Optional<Car> car = carRepository.findById(carId);
-        if (!car.isPresent()) throw new EntityNotFoundException("Provided incorrect ID");
-        Car carObject = car.get();
-        carString = jsonFormatter.serialize(carObject);
+        Car car = carDAO.getCarById(carId);
+        if (car == null) throw new EntityNotFoundException("Provided incorrect ID");
+        carString = jsonFormatter.serialize(car);
         return carString;
     }
 
